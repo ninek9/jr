@@ -1,0 +1,98 @@
+Demerits v1.0b1
+Brett Profitt
+
+Provides a way of assigning users demerits with consequences for users who
+accumulate demerits.
+
+** REQUIREMENTS **
+In order for demerits to properly expire, the "expirationdate" plugin must 
+be installed and cron must correctly configured.
+
+** INSTALLATION **
+	* Unzip the file to the elgg/mods/ directory.
+	* Go to your Elgg tools administration section, find the new tool and 
+	  enable it.
+	* Customize the settings if desired.
+
+** CONFIGURATION **
+Once you have enabled demerits, check the options for when expire demerits.
+You can also choose to have reported content automatically add demerits.
+
+Consequences can be added by going to the admin page, clicking on the "Demerits"
+link on the left sidebar, and then going to "List Consequences."  There are no
+consequences by default, so you will want to add a new consequence.
+
+A consequence will take effect only after X many demerits have been accumulated
+by a user.  Consequences stack, so you have have multiple consequences for the
+same number of demerits.
+
+Currently 4 actions are supported for consequences: notify, suspend, ban, and 
+delete.  
+
+Notify allows you to send a notification to a user using Elgg's internal 
+notification system.  If the user has configured this to email, then it will
+also be sent through email.  The "to" field *must* be a valid Elgg user.  You
+can use a few variables in the notification action:
+%USERNAME% will be replaced by the demerit owner's user name.
+%USER_FULLNAME% will be replaced by the demerit owner's display name.
+%USER_EMAIL% will be replaced by the user's email address.
+%DEMERIT% will be replaced by a formatted view of the demerit that caused 
+this action.
+%DEMERIT_HISTORY% will be replaced by a formatted view of all past confirmed
+demerits.
+
+Suspend will suspend a user for X many days.
+
+Delete and ban will respecively delete and ban the user who has the
+demerit.  Delete should be used with caution, as the user will not be 
+recoverable.
+
+A standard sequence of consequences might look like this:
+
+	(Send a warning to the user)
+	After 3 confirmed demerits
+	Notify 
+	To: %USERNAME% 
+	Subject: Too many demerits
+	Message: %USER_FULLNAME%,
+		You have received 3 demerits for bad behavior.  After one more
+		your account will be suspended for 7 days.
+
+		Thanks,
+		MyElggSite Admin
+
+	(Send a notice to the user)
+	After 4 confirmed demerits
+	Notify
+	To: %USERNAME%
+	Subject: Account suspended
+	Message: %USER_FULLNAME%,
+		Your account has been suspended because of too many demerits.
+		See below for a list of the offenses.
+
+		%DEMERIT_HISTORY%
+
+		Your account will automatically be reactivated after 7 days.
+		
+		Thanks,
+		MyElggSite Admin.
+
+	(Suspend User)
+	After 4 confirmed demerits
+	Suspend
+	Number of days: 7
+
+	(Send notice to admin)
+	After 4 confirmed demerits
+	Notify
+	To: admin
+	Subject: Suspended account for %USERNAME%
+	Message: The account %USERNAME% has been suspended for 7 days because
+		of too many demerits.  Following is the list of demerits:
+		
+		%DEMERIT_HISTORY%
+	
+
+** CHANGES **
+v1.0b1 (May 21, 2009)
+	* Initial release.

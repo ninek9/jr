@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <plugin_manifest>
+	<field key="author" value="Pedro Prez" />
+	<field key="version" value="0.1b" />
+	<field key="description" value="Add geolocalization support" />
+	<field key="website" value="http://www.keetup.com/" />
+	<field key="copyright" value="(C) Keetup 2009-2010" />
+	<field key="licence" value="GNU Public License version 2" />
+    <field key= "elgg_version" value="2009072201" />
+ </plugin_manifest>

@@ -1,0 +1,33 @@
+JR TODO
+blog writing styling
+group styling
+default notification settings to both site and email
+
+
+MODS TO CORE ELGG
+-page_elements/header.php - noindex meta tag
+-mod/friends/start - add link to elgg_topbar
+	//Extend topbar to add our link if needed
+	extend_view('elgg_topbar/extend','friends/topbar');
+-mod/groups/views/default/groups/side_menu.php - different, replace with mine
+-mod/members/start.php - comment out "set up menu for logged in users"
+-mod/messages/languages/en.php - replace with mine
+-mod/messages/views/default/messages/css.php - replace with mine
+-mod/messages/views/default/messages/topbar.php - replace with mine
+-mod/messages/views/default/messages/forms/message.php - replace with mine
+-mod/riverdashboard/views/default/riverdashboard/css.php - replace with mine
+-mod/
+
+
+
+/homepages/15/d280439474/htdocs/e395203871/
+
+
+
+for some reason the "Friends" item in the Tools submenu is instantiated in /engine/lib/users.php
+
+
+
+
+3-29-10: edited dom element that gets created for tinymce. line 317 in C:\xampp\htdocs\elgg\mod\tinymce\tinymce\jscripts\tiny_mce\themes\advanced\editor_template_src.js
+	
