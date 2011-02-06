@@ -201,13 +201,13 @@
 	function profile_manager_profile_override($hook_name, $entity_type, $return_value, $parameters){
 		global $CONFIG;
 		
-		$count = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null, true);
+		$count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null, true);
 	    
 		if($count > 0){
 			$result = array();
 						
 			// Get all the custom profile fields
-			$entities = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", $count);
+			$entities = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", $count);
 		    
 		    // Make new result
 		    foreach($entities as $entity){
@@ -245,14 +245,14 @@
 		global $CONFIG;
 		$result = $return_value;
 		
-		$count = get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, $CONFIG->site_guid, "", null, null, true);
+		$count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, $CONFIG->site_guid, "", null, null, true);
 		
 		if($count > 0){
 			$result = array();
 			$ordered = array();
 			
 			// Get all custom group fields
-			$group_fields = get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, $CONFIG->site_guid, "", $count);
+			$group_fields = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, $CONFIG->site_guid, "", $count);
 			
 			// Order the group fields and filter some types out
 			foreach($group_fields as $group_field){
@@ -469,11 +469,11 @@
 		$result["fields"] = array();
 		$ordered_cats = array();
 		
-		$cat_count = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
+		$cat_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
 		
 		// get ordered categories
 		if($cat_count > 0){
-			$cats = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, $cat_count);
+			$cats = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, $cat_count);
 			
 			foreach($cats as $cat){
 				$ordered_cats[$cat->order] = $cat;
@@ -489,7 +489,7 @@
 		if(!empty($ordered_cats)){
 			foreach($ordered_cats as $key => $cat){
 				if(!$edit){					
-					$rel_count = get_entities_from_relationship(CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_CATEGORY_RELATIONSHIP, $cat->guid, true, "object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
+					$rel_count =  elgg_get_entities_from_relationship(CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_CATEGORY_RELATIONSHIP, $cat->guid, true, "object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
 					if($rel_count == 0){
 						$filtered_ordered_cats[$cat->guid] = array();
 						$result["categories"][$cat->guid] = $cat;
@@ -504,11 +504,11 @@
 			}
 		}
 		
-		$field_count = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, null, null, null, true);
+		$field_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, null, null, null, true);
 
 		// adding fields to categories
 		if($field_count > 0){
-			$fields = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, null, $field_count);
+			$fields = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, null, $field_count);
 			
 			foreach($fields as $field){
 				if(!($cat_guid = $field->category_guid)){
@@ -552,10 +552,10 @@
 		$result = array();
 		$result["fields"] = array();
 		
-		$field_count = get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, null, null, null, null, true);
+		$field_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, null, null, null, null, true);
 
 		if($field_count > 0){
-			$fields = get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, null, null, $field_count);
+			$fields = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_GROUP_SUBTYPE, null, null, $field_count);
 			foreach($fields as $field){
 				$admin_only = $field->admin_only;
 				if($admin_only != "yes" || isadminloggedin()){

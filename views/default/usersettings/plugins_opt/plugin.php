@@ -7,8 +7,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 
@@ -20,7 +18,7 @@ $manifest = $details['manifest'];
 
 $user_guid = $details['user_guid'];
 if ($user_guid) {
-	$user_guid = $_SESSION['user']->guid;
+	$user_guid = get_loggedin_userid();
 }
 
 if (elgg_view("usersettings/{$plugin}/edit")) {

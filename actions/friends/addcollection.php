@@ -6,9 +6,7 @@
  * @package Elgg
  * @subpackage Core
 
- * @author Curverider Ltd
 
- * @link http://elgg.org/
  */
 
 //must be logged in
@@ -21,7 +19,7 @@ $friends = get_input('friends_collection');
 if($collection_name){
 
 	//create the collection
-	$create_collection = create_access_collection($collection_name, $_SESSION['user']->getGUID());
+	$create_collection = create_access_collection($collection_name, get_loggedin_userid());
 
 	//if the collection was created and the user passed some friends from the form, add them
 	if($create_collection && (!empty($friends))){
@@ -34,7 +32,7 @@ if($collection_name){
 	// Success message
 	system_message(elgg_echo("friends:collectionadded"));
 	// Forward to the collections page
-	forward("pg/collections/" . $_SESSION['user']->username);
+	forward("pg/collections/" . get_loggedin_user()->username);
 
 } else {
 	register_error(elgg_echo("friends:nocollectionname"));

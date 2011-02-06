@@ -17,7 +17,7 @@
 		
 	$n = 0;	
 	$skipped = 0;
-	$max_fields = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, null, null, null, true) + 1;
+	$max_fields = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, null, null, null, true) + 1;
 			
 	while ($translation = get_plugin_setting("admin_defined_profile_$n", 'profile')){
 		$metadata_name = "admin_defined_profile_$n";
@@ -29,7 +29,7 @@
 		}
 		$metadata_type = $type;
 		
-		$count = get_entities_from_metadata("metadata_name", $metadata_name, "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null,null, true);
+		$count = elgg_get_entities_from_metadata("metadata_name", $metadata_name, "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null,null, true);
 		
 		if($count == 0){
 			$field = new ElggObject();

@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 
@@ -63,8 +61,6 @@ function admin_init() {
 
 /**
  * Add submenu items for admin page.
- *
- * @return unknown_type
  */
 function admin_pagesetup() {
 	if (get_context() == 'admin') {
@@ -80,6 +76,7 @@ function admin_pagesetup() {
 /**
  * Handle admin pages.
  *
+ * @todo this should probably return something to prevent the default page handler from running
  * @param $page
  * @return unknown_type
  */
@@ -90,10 +87,18 @@ function admin_settings_page_handler($page) {
 
 	if ($page[0]) {
 		switch ($page[0]) {
-			case 'user' : $path = $CONFIG->path . "admin/user.php"; break;
-			case 'statistics' : $path = $CONFIG->path . "admin/statistics.php"; break;
-			case 'plugins' : $path = $CONFIG->path . "admin/plugins.php"; break;
-			case 'site' : $path = $CONFIG->path . "admin/site.php"; break;
+			case 'user':
+				$path = $CONFIG->path . "admin/user.php";
+				break;
+			case 'statistics':
+				$path = $CONFIG->path . "admin/statistics.php";
+				break;
+			case 'plugins':
+				$path = $CONFIG->path . "admin/plugins.php";
+				break;
+			case 'site':
+				$path = $CONFIG->path . "admin/site.php";
+				break;
 		}
 	}
 

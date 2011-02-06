@@ -361,7 +361,7 @@ function oi_upgrade($from_version, $to_version) {
 		default:
 		case 2:
 			// upgrade to new version of object.
-			$invites = get_entities('object', 'invitation', '', '', 99999);
+			$invites = elgg_get_entities('object', 'invitation', '', '', 99999);
 			foreach ($invites as $invite) {
 				oi_fix_b1_invite($invite);
 			}

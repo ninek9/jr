@@ -4,10 +4,6 @@
  * Invite a user to join a group
  *
  * @package ElggGroups
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.com/
  */
 
 // Load configuration
@@ -31,7 +27,7 @@ if (sizeof($user_guid))
 
 		if ( $user && $group) {
 
-			if (get_loggedin_userid() == $group->owner_guid)
+			if (($group instanceof ElggGroup) && ($group->canEdit()))
 			{
 				if (!check_entity_relationship($group->guid, 'invited', $user->guid))
 				{

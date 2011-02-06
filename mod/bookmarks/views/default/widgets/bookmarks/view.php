@@ -28,7 +28,7 @@ $(document).ready(function () {
 				$owner = $s->getOwnerEntity();
 
 				//get the time
-				$friendlytime = friendly_time($s->time_created);
+				$friendlytime = elgg_view_friendly_time($s->time_created);
 
 				//get the user icon
 				$icon = elgg_view(
@@ -56,8 +56,8 @@ $(document).ready(function () {
 
 			}
 
-			$user_inbox = $vars['url'] . "pg/bookmarks/" . page_owner_entity()->username . "/inbox";
-			echo "<div class=\"shares_widget_wrapper\"><a href=\"{$user_inbox}\">".elgg_echo('bookmarks:inbox')."</a></div>";
+			$user_inbox = $vars['url'] . "pg/bookmarks/owner/" . page_owner_entity()->username;
+			echo "<div class=\"widget_more_wrapper\"><a href=\"{$user_inbox}\">".elgg_echo('bookmarks:more')."</a></div>";
 
 		}
 	

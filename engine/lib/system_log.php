@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
@@ -18,7 +16,6 @@
  *
  * To have events involving your object to be logged simply implement this interface.
  *
- * @author Curverider Ltd
  */
 interface Loggable {
 	/**
@@ -203,7 +200,7 @@ function system_log($object, $event) {
 		$object_subtype = $object->getSubtype();
 		$event = sanitise_string($event);
 		$time = time();
-		$performed_by = (int)$_SESSION['guid'];
+		$performed_by = get_loggedin_userid();
 
 		if (isset($object->access_id)) {
 			$access_id = $object->access_id;

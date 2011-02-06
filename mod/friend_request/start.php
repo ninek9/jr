@@ -88,7 +88,7 @@ function friendrequests_page_handler($page_elements) {
 
 function count_friend_requests() {
 	global $CONFIG;
-	return get_entities_from_relationship('friendrequest', $_SESSION['user']->guid, true, "", "", 0, "", 0, 0, true);
+	return elgg_get_entities_from_relationship('friendrequest', $_SESSION['user']->guid, true, "", "", 0, "", 0, 0, true);
 }
 
 

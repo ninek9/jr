@@ -2,7 +2,7 @@
 JOCK ROSTER Custom Index cascading style sheet
 author: eric zanol
 Important Note: Turn of "Use Simple Cache" in Site Administration in order to save changes here and refresh to see those changes.
-*/
+	 */
 
 
 /* BEGIN NAV DECLARATIONS - applies to header located in /htdocs/elgg/views/default/header_contents.php */
@@ -67,7 +67,7 @@ Important Note: Turn of "Use Simple Cache" in Site Administration in order to sa
 
 #index_left {
 	width: 661px;
-	float: left;
+    float:left;
 	margin: 0;
 	padding: 0;
 }
@@ -150,7 +150,7 @@ Important Note: Turn of "Use Simple Cache" in Site Administration in order to sa
 
 /*
 #elgg_topbar_container_left {
-	float: left;
+	float:left;
 	height: 29px;
 	left: 0px;
 	top: 0px;
@@ -164,7 +164,7 @@ Important Note: Turn of "Use Simple Cache" in Site Administration in order to sa
 /*
 #elgg_topbar_container_left a.pagelinks {
 	color: #000;
-	display: block;
+	display:block;
 	padding: 3px;
 }
 */

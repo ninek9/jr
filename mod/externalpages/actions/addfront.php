@@ -5,10 +5,6 @@
 	 * Here we use the title field for the lefthand side and the description for the righthand side
 	 * 
 	 * @package ElggExPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
 	 */
 
 	// Make sure we're logged as admin
@@ -29,9 +25,9 @@
 		// Tell the system what type of external page it is
 			$frontpage->subtype = "front";
 		// Set its owner to the current user
-			$frontpage->owner_guid = $_SESSION['user']->getGUID();
+			$frontpage->owner_guid = get_loggedin_userid();
 		// For now, set its access to public
-			$frontpage->access_id = 2;
+			$frontpage->access_id = ACCESS_PUBLIC;
 		// Set its title and description appropriately
 			$frontpage->title = $contents_left;
 			$frontpage->description = $contents_right;

@@ -21,7 +21,7 @@
 		$added = 0;	
 		$defaults = array();
 		
-		$max_fields = get_entities("object", "custom_" . $type . "_field", $CONFIG->site_guid, null, null, null, true) + 1;
+		$max_fields = elgg_get_entities("object", "custom_" . $type . "_field", $CONFIG->site_guid, null, null, null, true) + 1;
 	
 		if($type == "profile"){
 			// Profile defaults
@@ -48,7 +48,7 @@
 		
 		foreach($defaults as $metadata_name => $metadata_type){
 		
-			$count = get_entities_from_metadata("metadata_name", $metadata_name, "object", "custom_" . $type . "_field", $CONFIG->site_guid, "", null, null,null, true);
+			$count = elgg_get_entities_from_metadata("metadata_name", $metadata_name, "object", "custom_" . $type . "_field", $CONFIG->site_guid, "", null, null,null, true);
 			
 			if($count == 0){
 				$field = new ElggObject();

@@ -95,7 +95,7 @@
 	  pages/view.php,
 	  reportedcontent/views/default/reportedcontent/listing.php:
 	  Updated mods to use elgg_add_action_tokens_to_url() instead of
-	  elgg_validate_action_url().
+	  elgg_add_action_tokens_to_url().
 	* blog/everyone.php, bookmarks/everyone.php, bookmarks/index.php,
 	  bookmarks/views/default/bookmarks/form.php,
 	  bookmarks/views/default/bookmarks/sharing.php,

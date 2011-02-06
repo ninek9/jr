@@ -3,8 +3,6 @@
  * View a list of entities
  *
  * @package Elgg
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.com/
  *
  */
 
@@ -60,7 +58,7 @@ if ($viewtype == 'list') {
 }
 
 if ($count) {
-	$html .= $nav;
+	$html .= '<div class="clearfloat"></div>' . $nav;
 }
 
 echo $html;

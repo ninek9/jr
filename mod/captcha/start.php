@@ -3,10 +3,6 @@
 	 * Elgg captcha plugin
 	 * 
 	 * @package ElggCaptcha
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	function captcha_init()
@@ -113,6 +109,9 @@
 			return true;
 		
 		register_error(elgg_echo('captcha:captchafail'));
+
+		// forward to referrer or else action code sends to front page
+		forward(REFERER);
 			
 		return false;
 	}

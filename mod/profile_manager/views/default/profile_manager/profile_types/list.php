@@ -10,7 +10,7 @@
 	* @link http://www.coldtrick.com/
 	*/
  
-	$profile_types_count = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
+	$profile_types_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
 	
 	if($profile_types_count > 0){
 		$list = list_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, $profile_types_count, false, false, false);

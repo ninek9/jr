@@ -4,10 +4,6 @@
 	 * Elgg groups plugin add topic action.
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Make sure we're logged in; forward to the front page if not
@@ -18,7 +14,7 @@
 	    if (!$group_entity->isMember($vars['user'])) forward();
 	    
 	// Get input data
-	    $title = get_input('topictitle');
+	    $title = strip_tags(get_input('topictitle'));
 		$message = get_input('topicmessage');
 		$tags = get_input('topictags');
 		$access = get_input('access_id');

@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 // Get the Elgg framework
@@ -25,7 +23,7 @@ $title = elgg_view_title(elgg_echo('admin:user'));
 
 set_context('search');
 
-$result = elgg_list_entities(array('type' => 'user', 'limit' => $limit, 'full_view' => FALSE));
+$result = elgg_list_entities(array('type' => 'user', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
 
 set_context('admin');
 

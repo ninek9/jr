@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $params = get_input('params');
@@ -17,7 +15,7 @@ $result = false;
 
 foreach ($params as $k => $v) {
 	// Save
-	$result = set_plugin_usersetting($k, $v, $_SESSION['user']->guid, $plugin);
+	$result = set_plugin_usersetting($k, $v, get_loggedin_userid(), $plugin);
 
 	// Error?
 	if (!$result) {

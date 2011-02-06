@@ -4,10 +4,6 @@
 	 * Elgg Groups css
 	 * 
 	 * @package groups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 ?>
@@ -399,3 +395,19 @@ span.timestamp {
 	width:176px;
 }
 
+#groups_member_link {
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+.group_widget {
+	margin:0 0 20px 0;
+	padding: 0 0 5px 0;
+	background:white;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+
+.group_widget .search_listing {
+border:2px solid #CCCCCC;
+}

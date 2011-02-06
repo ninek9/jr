@@ -146,7 +146,7 @@ function demerits_format_demerit_history($user_guid, $state='confirmed') {
 		return '';
 	}
 	
-	$demerits = get_entities_from_metadata('state', $state, 'object', 'demerit', $user_guid, 10000, '', 'time_created', '', false);
+	$demerits = elgg_get_entities_from_metadata('state', $state, 'object', 'demerit', $user_guid, 10000, '', 'time_created', '', false);
 	$formatted = array();
 	
 	if (!is_array($demerits)) {

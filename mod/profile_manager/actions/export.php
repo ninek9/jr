@@ -41,8 +41,8 @@
 				$type = "group";
 			}
 			
-			$entities_count = get_entities($type,  "", null, null, null, null, true);
-			$entities = get_entities($type, "", null, null, $entities_count);
+			$entities_count = elgg_get_entities($type,  "", null, null, null, null, true);
+			$entities = elgg_get_entities($type, "", null, null, $entities_count);
 			
 			foreach($entities as $entity){
 				$row = "";

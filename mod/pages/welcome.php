@@ -4,10 +4,6 @@
 	 * The user or group owner can set an introduction to their wiki pages
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010 - 2009
-	 * @link http://elgg.com/
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
@@ -25,7 +21,7 @@
 		}
     
 	//get the owners welcome message if it exists
-	$welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'owner_guid' => $page_owner->getGUID(), 'limit' => 1));
+	$welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'container_guid' => $page_owner->getGUID(), 'limit' => 1));
 	global $CONFIG;
 	add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
     

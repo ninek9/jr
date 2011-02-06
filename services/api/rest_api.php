@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage API
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 /**
@@ -29,8 +27,10 @@ if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
 
 // plugins should return true to control what API and user authentication handlers are registered
 if (trigger_plugin_hook('rest', 'init', null, false) == false) {	
-	// check session - this usually means a REST call from a web browser
-	register_pam_handler('pam_auth_session');
+	// for testing from a web browser, you can use the session PAM
+	// do not use for production sites!!
+	//register_pam_handler('pam_auth_session');
+
 	// user token can also be used for user authentication
 	register_pam_handler('pam_auth_usertoken');
 

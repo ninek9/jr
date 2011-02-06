@@ -3,10 +3,6 @@
 	 * Elgg groups plugin
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
@@ -15,29 +11,38 @@
 	$offset = get_input("offset", 0);
 	$tag = get_input("tag");
 	$filter = get_input("filter");
-	if(!$filter)
+	if (!$filter) {
+		// active discussions is the default
 		$filter = "active";
+	}
 	
 	
 	// Get objects
 	$context = get_context();
 	
 	set_context('search');
-	if ($tag != "")
-		$objects = list_entities_from_metadata('tags',$tag,'group',"","", $limit, false);
-	else{
+	if ($tag != "") {
+		$filter = 'search';
+		// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
+		$params = array(
+			'metadata_name' => 'interests',
+			'metadata_value' => $tag,
+			'types' => 'group',
+			'limit' => $limit,
+			'full_view' => FALSE,
+		);
+		$objects = elgg_list_entities_from_metadata($params);
+	} else {
 		switch($filter){
 			case "newest":
-			$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => 0, 'limit' => $limit, 'full_view' => false));
+			$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => 0, 'limit' => $limit, 'offset' => $offset, 'full_view' => false));
 			break;
 			case "pop":
 			$objects = list_entities_by_relationship_count('member', true, "", "", 0, $limit, false);
 			break;
 			case "active":
-			$objects = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 40, 0, 0, false, true);
-			break;
 			case 'default':
-			$objects = elgg_list_entities(array('types' => 'group', 'limit' => $limit, 'full_view' => FALSE));
+			$objects = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 40, 0, 0, false, true);
 			break;
 		}
 	}

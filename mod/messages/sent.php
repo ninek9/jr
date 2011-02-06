@@ -4,10 +4,6 @@
 	 * Elgg sent messages page
 	 * 
 	 * @package ElggMessages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Load Elgg engine
@@ -17,7 +13,7 @@
 		if (!isloggedin()) forward(); 
 		
 	// Get the logged in user
-		$page_owner = $_SESSION['user'];
+		$page_owner = get_loggedin_user();
 		set_page_owner($page_owner->guid);
 		
 	// Get offset
@@ -27,14 +23,21 @@
 		$limit = 10;
 		
     // Display all the messages a user owns, these will make up the sentbox
-		$messages = elgg_get_entities_from_metadata(array('metadata_name' => 'fromId', 'metadata_value' => $_SESSION['user']->guid, 'types' => 'object', 'subtypes' => 'messages', 'owner_guid' => $page_owner->guid, 'limit' => $limit, 'offset' => $offset)); 
-		//$page_owner->getObjects('messages');
+		// @todo - fix hack where limit + 1 is passed
+		$messages = elgg_get_entities_from_metadata(array(
+			'metadata_name' => 'fromId',
+			'metadata_value' => get_loggedin_userid(),
+			'types' => 'object',
+			'subtypes' => 'messages',
+			'owner_guid' => $page_owner->guid,
+			'limit' => $limit + 1,
+			'offset' => $offset)
+		);
 		
     // Set the page title
 	    $area2 = elgg_view_title(elgg_echo("messages:sentmessages"));
 		
 	// Set content
-		// $area2 .= elgg_view("messages/view",array('entity' => $messages, 'page_view' => "sent", 'limit' => $limit, 'offset' => $offset));
 		$area2 .= elgg_view("messages/forms/view",array('entity' => $messages, 'page_view' => "sent", 'limit' => $limit, 'offset' => $offset));
 
 	// Format

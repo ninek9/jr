@@ -7,9 +7,9 @@
 	$default_search_criteria .= elgg_echo("name") . elgg_view("input/text", array("internalname" => "user_data_partial_search_criteria[name]"));
 	$default_search_criteria .= "</td></tr><tr>";
 	
-	$profile_type_count = get_entities_from_metadata("show_on_members", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, null, true);
+	$profile_type_count = elgg_get_entities_from_metadata("show_on_members", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, null, true);
 	if($profile_type_count > 0){
-		$profile_types = get_entities_from_metadata("show_on_members", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, $profile_type_count);
+		$profile_types = elgg_get_entities_from_metadata("show_on_members", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, $profile_type_count);
 
 		foreach($profile_types as $profile_type){
 			// label
@@ -42,9 +42,9 @@
 	
 	$simple_search_criteria = "";
 	
-	$simple_search_fields_count = get_entities_from_metadata("simple_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null,null, true);
+	$simple_search_fields_count = elgg_get_entities_from_metadata("simple_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null,null, true);
 	if($simple_search_fields_count > 0){
-		$simple_search_fields = get_entities_from_metadata("simple_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, $simple_search_fields_count);
+		$simple_search_fields = elgg_get_entities_from_metadata("simple_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, $simple_search_fields_count);
 		
 		foreach($simple_search_fields as $field){
 			$ordered_simple_search_fields[$field->order] = $field;
@@ -107,9 +107,9 @@
 	
 	$advanced_search_criteria = "";
 	
-	$advanced_search_fields_count = get_entities_from_metadata("advanced_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null,null, true);
+	$advanced_search_fields_count = elgg_get_entities_from_metadata("advanced_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, "", null, null,null, true);
 	if($advanced_search_fields_count > 0){
-		$advanced_search_fields = get_entities_from_metadata("advanced_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, $advanced_search_fields_count);
+		$advanced_search_fields = elgg_get_entities_from_metadata("advanced_search", "yes", "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, $CONFIG->site_guid, $advanced_search_fields_count);
 		
 		foreach($advanced_search_fields as $field){
 			$ordered_advanced_search_fields[$field->order] = $field;

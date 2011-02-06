@@ -6,8 +6,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
@@ -185,16 +183,6 @@ class ElggObject extends ElggEntity {
 		return false;
 	}
 
-	/**
-	 * Get the collections associated with a object.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int $limit The number of results to return
-	 * @param int $offset Any indexing offset
-	 * @return unknown
-	 */
-	//public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
-
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 
 	/**
@@ -272,7 +260,7 @@ function create_object_entity($guid, $title, $description) {
  * THIS FUNCTION IS DEPRECATED.
  *
  * Delete a object's extra data.
- *
+ * @todo - this should be removed - was deprecated in 1.5 or earlier
  * @param int $guid
  */
 function delete_object_entity($guid) {

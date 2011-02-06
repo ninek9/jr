@@ -3,9 +3,6 @@
 	 * Elgg file browser
 	 * 
 	 * @package ElggFile
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 * 
 	 * TODO: File icons, download & mime types
@@ -13,9 +10,8 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-	if (is_callable('group_gatekeeper')) {
-		group_gatekeeper();
-	}
+	// access check for closed groups
+	group_gatekeeper();
 	
 	//set the title
 	if (page_owner() == get_loggedin_userid()) {
@@ -28,14 +24,16 @@
 		
 	// Get objects
 	set_context('search');
-	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'container_guid' => page_owner(), 'limit' => 10, 'full_view' => FALSE));
-	set_context('file');
-	$get_filter = get_filetype_cloud(page_owner());
-	if ($get_filter) {
-		$area1 = $get_filter;
-	} else {
-		$area2 .= elgg_view('page_elements/contentwrapper',array('body' => elgg_echo("file:none")));
+	$offset = (int)get_input('offset', 0);
+	$content = elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'container_guid' => page_owner(), 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
+	if (!$content) {
+		$content = elgg_view('page_elements/contentwrapper',array('body' => elgg_echo("file:none")));
 	}
+	$area2 .= $content;
+
+	set_context('file');
+	$area1 = get_filetype_cloud(page_owner());
+
 
 	$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 	

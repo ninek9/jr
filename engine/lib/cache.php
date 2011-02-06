@@ -5,15 +5,12 @@
  *
  * @package Elgg
  * @subpackage API
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
  */
 
 /**
  * ElggCache The elgg cache superclass.
  * This defines the interface for a cache (wherever that cache is stored).
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */
@@ -211,7 +208,6 @@ abstract class ElggSharedMemoryCache extends ElggCache {
  * Dummy cache which stores values in a static array. Using this makes future replacements to other caching back
  * ends (eg memcache) much easier.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */
@@ -276,7 +272,6 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
  * ElggFileCache
  * Store cached data in a file store.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */
@@ -332,7 +327,7 @@ class ElggFileCache extends ElggCache {
 	 * @param string $filename
 	 */
 	protected function sanitise_filename($filename) {
-		// TODO : Writeme
+		// @todo : Writeme
 
 		return $filename;
 	}
@@ -397,11 +392,11 @@ class ElggFileCache extends ElggCache {
 	}
 
 	public function clear() {
-		// TODO : writeme
+		// @todo writeme
 	}
 
 	public function __destruct() {
-		// TODO: Check size and age, clean up accordingly
+		// @todo Check size and age, clean up accordingly
 		$size = 0;
 		$dir = $this->get_variable("cache_path");
 
@@ -430,7 +425,7 @@ class ElggFileCache extends ElggCache {
 					unlink($dir.$f);
 				}
 
-				// TODO: Size
+				// @todo Size
 			}
 		}
 	}

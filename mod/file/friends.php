@@ -3,9 +3,6 @@
 	 * Elgg file browser
 	 * 
 	 * @package ElggFile
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
@@ -21,6 +18,7 @@
 	$area2 = elgg_view_title($title);
 	
 	set_context('search');
+	// offset is grabbed in list_user_friends_objects
 	$content = list_user_friends_objects($owner->guid, 'file', 10, false);
 	set_context('file');
 	$area1 = get_filetype_cloud($owner->guid, true);

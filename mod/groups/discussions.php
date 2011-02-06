@@ -6,16 +6,13 @@
 	 * they are part of
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-		
-		group_gatekeeper();
+
+	// access check for closed groups
+	group_gatekeeper();
 		
 	// Display them
 	    $area2 = elgg_view_title(elgg_echo("groups:latestdiscussion"));

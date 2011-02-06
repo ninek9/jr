@@ -3,10 +3,6 @@
 	 * Join a group action.
 	 *
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Load configuration
@@ -41,7 +37,7 @@
 				remove_entity_relationship($user->guid, 'membership_request', $group->guid);
 
 				// add to river
-				add_to_river('river/group/create','join',$user->guid,$group->guid);
+				add_to_river('river/relationship/member/create','join',$user->guid,$group->guid);
 
 				forward($group->getURL());
 				exit;

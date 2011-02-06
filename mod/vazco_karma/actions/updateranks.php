@@ -3,7 +3,7 @@
 	admin_gatekeeper();
 	$old = ini_set('default_socket_timeout', 999999);
 	$karma = new vazco_karma();
-	$users = get_entities('user','',0,'',99999999);
+	$users = elgg_get_entities('user','',0,'',99999999);
 	foreach($users as $user){
 		$karma->givePoints($user,0);
 	}

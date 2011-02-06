@@ -11,8 +11,8 @@
 	*/
 
 	$fieldtype = $vars['fieldtype'];
-	$entities_count = get_entities("object", $fieldtype, null, null, null, null, true);
-	$entities = get_entities("object", $fieldtype, null, null, $entities_count);
+	$entities_count = elgg_get_entities("object", $fieldtype, null, null, null, null, true);
+	$entities = elgg_get_entities("object", $fieldtype, null, null, $entities_count);
 	
 	$ts = time();
 	$token = generate_action_token($ts);

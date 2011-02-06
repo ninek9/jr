@@ -87,7 +87,7 @@ function demerits_pagehandler($page) {
 		default:
 		case 'list':
 			if ($user = get_user_by_username($page[1])) {
-				//$demerits = get_entities('demerit', '');
+				//$demerits = elgg_get_entities('demerit', '');
 				$guid = $user->getGUID();
 			} else {
 				$guid = '';
@@ -272,7 +272,7 @@ function demerits_reported_content_add($hook, $entity_type, $returnvalue, $param
  * @return unknown_type
  */
 function demerits_reported_content_delete($hook, $entity_type, $returnvalue, $params) {
-	if ($demerits = get_entities_from_metadata('reported_content_id', $params['entity']->getGUID(), '', 'demerit')
+	if ($demerits = elgg_get_entities_from_metadata('reported_content_id', $params['entity']->getGUID(), '', 'demerit')
 		AND is_array($demerits)) {
 		foreach ($demerits as $demerit) {
 			if (!$demerit->delete(false)) {
@@ -295,7 +295,7 @@ function demerits_reported_content_delete($hook, $entity_type, $returnvalue, $pa
  * @return unknown_type
  */
 function demerits_reported_content_archive($hook, $entity_type, $returnvalue, $params) {
-	if ($demerits = get_entities_from_metadata('reported_content_id', $params['entity']->getGUID(), '', 'demerit')
+	if ($demerits = elgg_get_entities_from_metadata('reported_content_id', $params['entity']->getGUID(), '', 'demerit')
 		AND is_array($demerits)) {
 		foreach ($demerits as $demerit) {
 			if (!$demerit->set_state('archived', false)) {
@@ -315,9 +315,9 @@ function demerits_reported_content_archive($hook, $entity_type, $returnvalue, $p
  */
 function demerits_get_count($user_guid, $state=null) {
 	if ($state) {
-		return get_entities_from_metadata('state', $state, 'object', 'demerit', $user_guid, '', '', '', '', true);
+		return elgg_get_entities_from_metadata('state', $state, 'object', 'demerit', $user_guid, '', '', '', '', true);
 	} else {
-		return get_entities('object', 'demerit', $user_guid, '', '', '', true);
+		return elgg_get_entities('object', 'demerit', $user_guid, '', '', '', true);
 	}
 }
 
@@ -355,8 +355,8 @@ function demerits_process_user_consequences($hook, $entity_type, $returnvalue, $
 	foreach ($states as $state) {
 		// add one for the current demerit being added.
 		$count = demerits_get_count($owner->getGUID(), $state);
-		$test = get_entities('object', 'demerit_consequence', '', '', 10000);
-		$consequences = get_entities_from_metadata('demerit_count', $count, 'object', 'demerit_consequence', '', 10000);
+		$test = elgg_get_entities('object', 'demerit_consequence', '', '', 10000);
+		$consequences = elgg_get_entities_from_metadata('demerit_count', $count, 'object', 'demerit_consequence', '', 10000);
 		// can't pass multiple metadata values so we have to foreach to get the real ones.
 		if (!is_array($consequences)) {
 			continue;

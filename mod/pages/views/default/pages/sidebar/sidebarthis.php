@@ -3,10 +3,6 @@
 	 * Elgg Pages
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	global $CONFIG;
@@ -74,7 +70,7 @@
 				 $children .= "\n\t\t{\n";
 				$children .= "\t\t\t\"text\": \"<a href=\\\"{$child->getURL()}\\\">{$child->title}</a>\",\n";
 				
-				$haschild = get_entities_from_metadata('parent_guid',$child->guid,'','',0,10,0,'',0,true);
+				$haschild = elgg_get_entities_from_metadata('parent_guid',$child->guid,'','',0,10,0,'',0,true);
 				if ($haschild) {
 					$children .= "\t\t\t\"id\": \"{$child->getGUID()}\",\n\t\t\t\"hasChildren\": true\n";
 				}				

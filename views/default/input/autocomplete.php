@@ -4,10 +4,8 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
- * @TODO: This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
+ * @todo This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
  *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['js'] Any Javascript to enter into the input tag

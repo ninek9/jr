@@ -18,10 +18,10 @@
 	$formbody .= "</td>\n";
 	$formbody .= "<td rowspan='2'  class='custom_fields_add_form_table_right'>\n"; 
 	
-	$type_count = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
+	$type_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
 	
 	if($type_count > 0){
-		$types = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, $type_count);
+		$types = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, $type_count);
 		
 		$options = array();
 		

@@ -4,10 +4,6 @@
 	 * Elgg Groups topic edit/add page
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 * @uses $vars['object'] Optionally, the topic to edit
 	 */
@@ -94,7 +90,7 @@
 		<!-- required hidden info and submit button -->
 		<p>
 			<input type="hidden" name="group_guid" value="<?php echo $group_guid; ?>" />
-			<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
+			<input type="submit" class="submit_button" value="<?php echo elgg_echo('post'); ?>" />
 		</p>
 	
 	</form>

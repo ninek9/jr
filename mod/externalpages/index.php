@@ -3,10 +3,6 @@
 	 * Elgg External pages
 	 * 
 	 * @package ElggExpages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
@@ -16,9 +12,6 @@
 	$type = get_input('type'); //the type of page e.g about, terms etc
 	if(!$type)
 		$type = "front"; //default to the frontpage
-	
-	// Set admin user for user block
-	set_page_owner($_SESSION['guid']);
 	
 	//display the title
 	$title = elgg_view_title(elgg_echo('expages'));

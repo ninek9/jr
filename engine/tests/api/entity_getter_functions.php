@@ -4,8 +4,6 @@
  * Elgg Test Entity Getter Functions
  * @package Elgg
  * @subpackage Test
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/**
@@ -847,7 +845,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'type' => 'object',
 			'limit' => 1,
-			'order_by' => 'e.time_created desc'
+			'order_by' => 'guid desc'
 		);
 
 		// grab ourself again to fill out attributes.
@@ -875,7 +873,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'type' => 'object',
 			'subtype' => ELGG_ENTITIES_NO_VALUE,
 			'limit' => 1,
-			'order_by' => 'e.time_created desc'
+			'order_by' => 'guid desc'
 		);
 
 		// grab ourself again to fill out attributes.
@@ -910,7 +908,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'type' => 'object',
 			'subtype' => ELGG_ENTITIES_NO_VALUE,
 			'limit' => 1,
-			'order_by' => 'e.time_created desc'
+			'order_by' => 'guid desc'
 		);
 
 		// grab ourself again to fill out attributes.
@@ -1365,6 +1363,262 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		}
 	}
 
+	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsTriple() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$md_value = 'test_metadata_value_' . rand();
+
+		$md_name2 = 'test_metadata_name_' . rand();
+		$md_value2 = 'test_metadata_value_' . rand();
+
+		$md_name3 = 'test_metadata_name_' . rand();
+		$md_value3 = 'test_metadata_value_' . rand();
+
+		$guids = array();
+
+		// our target
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = $md_value;
+		$valid->$md_name2 = $md_value2;
+		$valid->$md_name3 = $md_value3;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+
+		// make some bad ones
+		$invalid_md_name = 'test_metadata_name_' . rand();
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->$md_name = $invalid_md_value;
+		$e->$md_name2 = $invalid_md_value;
+		$e->$md_name3 = $invalid_md_value;
+		$e->save();
+		$guids[] = $e->getGUID();
+
+		$invalid_md_value = 'test_metadata_value_' . rand();
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->$md_name = $invalid_md_value;
+		$e->$md_name2 = $invalid_md_value;
+		$e->$md_name3 = $invalid_md_value;
+		$e->save();
+		$guids[] = $e->getGUID();
+
+		$md_invalid_names = array();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name_value_pairs' => array(
+				array(
+					'name' => $md_name,
+					'value' => $md_value
+				),
+				array(
+					'name' => $md_name2,
+					'value' => $md_value2
+				),
+				array(
+					'name' => $md_name3,
+					'value' => $md_value3
+				)
+			)
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsa($entities, 'array');
+		$this->assertEqual(count($entities), 1);
+
+		foreach ($entities as $entity) {
+			$this->assertEqual($entity->getGUID(), $valid->getGUID());
+			$this->assertEqual($entity->$md_name, $md_value);
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+
+	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsDouble() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$md_value = 'test_metadata_value_' . rand();
+
+		$md_name2 = 'test_metadata_name_' . rand();
+		$md_value2 = 'test_metadata_value_' . rand();
+
+		$guids = array();
+
+		// our target
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = $md_value;
+		$valid->$md_name2 = $md_value2;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+
+		// make some bad ones
+		$invalid_md_name = 'test_metadata_name_' . rand();
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->$md_name = $invalid_md_value;
+		$e->$md_name2 = $invalid_md_value;
+		$e->save();
+		$guids[] = $e->getGUID();
+
+		$invalid_md_value = 'test_metadata_value_' . rand();
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->$md_name = $invalid_md_value;
+		$e->$md_name2 = $invalid_md_value;
+		$e->save();
+		$guids[] = $e->getGUID();
+
+		$md_invalid_names = array();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name_value_pairs' => array(
+				array(
+					'name' => $md_name,
+					'value' => $md_value
+				),
+				array(
+					'name' => $md_name2,
+					'value' => $md_value2
+				)
+			)
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsa($entities, 'array');
+		$this->assertEqual(count($entities), 1);
+
+		foreach ($entities as $entity) {
+			$this->assertEqual($entity->getGUID(), $valid->getGUID());
+			$this->assertEqual($entity->$md_name, $md_value);
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+
+	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsStupid() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$md_value = 'test_metadata_value_' . rand();
+
+		$md_name2 = 'test_metadata_name_' . rand();
+		$md_value2 = 'test_metadata_value_' . rand();
+
+		$md_name3 = 'test_metadata_name_' . rand();
+		$md_value3 = 'test_metadata_value_' . rand();
+
+		$md_name3 = 'test_metadata_name_' . rand();
+		$md_value3 = 'test_metadata_value_' . rand();
+
+		$md_name4 = 'test_metadata_name_' . rand();
+		$md_value4 = 'test_metadata_value_' . rand();
+
+		$md_name5 = 'test_metadata_name_' . rand();
+		$md_value5 = 'test_metadata_value_' . rand();
+
+		$guids = array();
+
+		// our target
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = $md_value;
+		$valid->$md_name2 = $md_value2;
+		$valid->$md_name3 = $md_value3;
+		$valid->$md_name4 = $md_value4;
+		$valid->$md_name5 = $md_value5;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+
+		// make some bad ones
+		$invalid_md_name = 'test_metadata_name_' . rand();
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->$md_name = $invalid_md_value;
+		$e->$md_name2 = $invalid_md_value;
+		$e->$md_name3 = $invalid_md_value;
+		$e->$md_name4 = $invalid_md_value;
+		$e->$md_name5 = $invalid_md_value;
+		$e->save();
+		$guids[] = $e->getGUID();
+
+		$invalid_md_value = 'test_metadata_value_' . rand();
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->$md_name = $invalid_md_value;
+		$e->$md_name2 = $invalid_md_value;
+		$e->$md_name3 = $invalid_md_value;
+		$e->$md_name4 = $invalid_md_value;
+		$e->$md_name5 = $invalid_md_value;
+		$e->save();
+		$guids[] = $e->getGUID();
+
+		$md_invalid_names = array();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name_value_pairs' => array(
+				array(
+					'name' => $md_name,
+					'value' => $md_value
+				),
+				array(
+					'name' => $md_name2,
+					'value' => $md_value2
+				),
+				array(
+					'name' => $md_name3,
+					'value' => $md_value3
+				),
+				array(
+					'name' => $md_name4,
+					'value' => $md_value4
+				),
+				array(
+					'name' => $md_name5,
+					'value' => $md_value5
+				),
+			)
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsa($entities, 'array');
+		$this->assertEqual(count($entities), 1);
+
+		foreach ($entities as $entity) {
+			$this->assertEqual($entity->getGUID(), $valid->getGUID());
+			$this->assertEqual($entity->$md_name, $md_value);
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+
 	function testElggApiGettersEntityMetadataNVPValidNInvalidV() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
@@ -1728,6 +1982,383 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			if ($e = get_entity($guid)) {
 				$e->delete();
 			}
+		}
+	}
+
+	/**
+	 * Annotations
+	 */
+	public function testElggApiGettersEntitiesFromAnnotation() {
+
+		// grab a few different users to annotation
+		// there will always be at least 2 here because of the construct.
+		$users = elgg_get_entities(array('type' => 'user', 'limit' => 2));
+
+		// create some test annotations
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$annotation_name = 'test_annotation_name_' . rand();
+		$annotation_value = rand(1000, 9999);
+		$annotation_name2 = 'test_annotation_name_' . rand();
+		$annotation_value2 = rand(1000, 9999);
+		$guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		create_annotation($valid->getGUID(), $annotation_name, $annotation_value, 'integer', $users[0]->getGUID());
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->save();
+		$guids[] = $valid2->getGUID();
+		create_annotation($valid2->getGUID(), $annotation_name2, $annotation_value2, 'integer', $users[1]->getGUID());
+
+		$options = array(
+			'annotation_owner_guid' => $users[0]->getGUID(),
+			'annotation_name' => $annotation_name
+		);
+
+		$entities = elgg_get_entities_from_annotations($options);
+
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $guids));
+			$annotations = $entity->getAnnotations($annotation_name);
+			$this->assertEqual(count($annotations), 1);
+
+			$this->assertEqual($annotations[0]->name, $annotation_name);
+			$this->assertEqual($annotations[0]->value, $annotation_value);
+			$this->assertEqual($annotations[0]->owner_guid, $users[0]->getGUID());
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+	
+	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
+	public function testElggApiGettersEntityRelationshipWithMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0]
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($es));
+		$this->assertTrue(count($es), 1);
+		
+		foreach ($es as $e) {
+			$this->assertEqual($guids[1], $e->guid);
+		}
+		
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntityRelationshipWithOutMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0]
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($es));
+		$this->assertTrue(count($es), 1);
+		
+		foreach ($es as $e) {
+			$this->assertEqual($guids[1], $e->guid);
+		}
+		
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntityRelationshipWithMetadataIncludingRealMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0],
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($es));
+		$this->assertTrue(count($es), 1);
+		
+		foreach ($es as $e) {
+			$this->assertEqual($guids[1], $e->guid);
+		}
+		
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntityRelationshipWithMetadataIncludingFakeMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0],
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'invalid',
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+
+		$this->assertTrue(empty($es));
+
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntitySiteSingular() {
+		global $CONFIG;
+		
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		// luckily this is never checked.
+		$obj1->site_guid = 2;
+		$obj1->save();
+		$guids[] = $obj1->guid;
+		$right_guid = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->site_guid = $CONFIG->site->guid;
+		$obj2->save();
+		$guids[] = $obj2->guid;
+		
+		$options = array(
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+			'site_guid' => 2
+		);
+		
+		$es = elgg_get_entities_from_metadata($options);
+		$this->assertTrue(is_array($es));
+		$this->assertEqual(1, count($es));
+		$this->assertEqual($right_guid, $es[0]->guid);
+		
+		foreach ($guids as $guid) {
+			get_entity($guid)->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntitySiteSingularAny() {
+		global $CONFIG;
+		
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		// luckily this is never checked.
+		$obj1->site_guid = 2;
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->site_guid = $CONFIG->site->guid;
+		$obj2->save();
+		$guids[] = $obj2->guid;
+		
+		$options = array(
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+			'site_guid' => ELGG_ENTITIES_ANY_VALUE,
+			'limit' => 2,
+			'order_by' => 'e.guid DESC'
+		);
+		
+		$es = elgg_get_entities_from_metadata($options);
+		$this->assertTrue(is_array($es));
+		$this->assertEqual(2, count($es));
+		
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->guid, $guids));
+		}
+		
+		foreach ($guids as $guid) {
+			get_entity($guid)->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntitySitePlural() {
+		global $CONFIG;
+		
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		// luckily this is never checked.
+		$obj1->site_guid = 2;
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->site_guid = $CONFIG->site->guid;
+		$obj2->save();
+		$guids[] = $obj2->guid;
+		
+		$options = array(
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+			'site_guids' => array($CONFIG->site->guid, 2),
+			'limit' => 2,
+			'order_by' => 'e.guid DESC'
+		);
+		
+		$es = elgg_get_entities_from_metadata($options);
+		$this->assertTrue(is_array($es));
+		$this->assertEqual(2, count($es));
+		
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->guid, $guids));
+		}
+		
+		foreach ($guids as $guid) {
+			get_entity($guid)->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntitySitePluralSomeInvalid() {
+		global $CONFIG;
+		
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		// luckily this is never checked.
+		$obj1->site_guid = 2;
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+		$right_guid = $obj2->guid;
+		
+		$options = array(
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+			// just created the first entity so nothing will be "sited" by it.
+			'site_guids' => array($CONFIG->site->guid, $guids[0]),
+			'limit' => 2,
+			'order_by' => 'e.guid DESC'
+		);
+		
+		$es = elgg_get_entities_from_metadata($options);
+		
+		$this->assertTrue(is_array($es));
+		$this->assertEqual(1, count($es));
+		$this->assertEqual($es[0]->guid, $right_guid);
+		
+		foreach ($guids as $guid) {
+			get_entity($guid)->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntitySitePluralAllInvalid() {
+		global $CONFIG;
+		
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		// luckily this is never checked.
+		$obj1->site_guid = 2;
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+		$right_guid = $obj2->guid;
+		
+		$options = array(
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+			// just created the first entity so nothing will be "sited" by it.
+			'site_guids' => array($guids[0], $guids[1]),
+			'limit' => 2,
+			'order_by' => 'e.guid DESC'
+		);
+		
+		$es = elgg_get_entities_from_metadata($options);
+		
+		$this->assertTrue(empty($es));
+		
+		foreach ($guids as $guid) {
+			get_entity($guid)->delete();
 		}
 	}
 }

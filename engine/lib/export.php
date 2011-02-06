@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
@@ -13,7 +11,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 interface Exportable {
 	/**
@@ -31,7 +28,6 @@ interface Exportable {
 
 /**
  * Define an interface for all ODD importable objects.
- * @author Curverider Ltd
  */
 interface Importable {
 	/**
@@ -135,12 +131,14 @@ function get_entity_from_uuid($uuid) {
  *
  * @param int $guid
  * @param string $uuid
+ * @return bool
  */
 function add_uuid_to_guid($guid, $uuid) {
 	$guid = (int)$guid;
 	$uuid = sanitise_string($uuid);
 
-	return create_metadata($guid, "import_uuid", $uuid);
+	$result = create_metadata($guid, "import_uuid", $uuid);
+	return (bool)$result;
 }
 
 

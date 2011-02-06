@@ -19,10 +19,10 @@
 		$entity = get_entity($guid);
 		
 		if($entity->getSubtype() == CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE){
-			$fields_count = get_entities_from_metadata("category_guid", $guid, "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, null, null, null, null, true);
+			$fields_count = elgg_get_entities_from_metadata("category_guid", $guid, "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, null, null, null, null, true);
 			
 			if($fields_count > 0){
-				$fields = get_entities_from_metadata("category_guid", $guid, "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, $fields_count);
+				$fields = elgg_get_entities_from_metadata("category_guid", $guid, "object", CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE, null, $fields_count);
 				
 				foreach($fields as $field){
 					$field->clearMetadata("category_guid");

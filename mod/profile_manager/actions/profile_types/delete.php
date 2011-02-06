@@ -22,8 +22,8 @@
 			if($entity->delete()){
 				$meta_name = "custom_profile_type";
 				// remove corresponding profile type metadata from userobjects
-				$entities_count = get_entities_from_metadata($meta_name,  $guid, "user", "", null,null,null,null,null,true);  
-  				$entities = get_entities_from_metadata($meta_name,  $guid, "user", "", null,$entities_count);
+				$entities_count = elgg_get_entities_from_metadata($meta_name,  $guid, "user", "", null,null,null,null,null,true);  
+  				$entities = elgg_get_entities_from_metadata($meta_name,  $guid, "user", "", null,$entities_count);
 				
   				foreach($entities as $entity){
   					// unset currently deleted profile type for user

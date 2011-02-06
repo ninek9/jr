@@ -21,8 +21,8 @@
 	
 	$fieldtype = get_input("fieldtype" , CUSTOM_PROFILE_FIELDS_PROFILE_SUBTYPE);
 	
-	$entities_count = get_entities("object", $fieldtype, null, null, null, null, true);
-	$entities = get_entities("object", $fieldtype, null, null, $entities_count);
+	$entities_count = elgg_get_entities("object", $fieldtype, null, null, null, null, true);
+	$entities = elgg_get_entities("object", $fieldtype, null, null, $entities_count);
 
 	$manifest = load_plugin_manifest("profile_manager");
 	

@@ -16,11 +16,12 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
+global $_PAM_HANDLERS;
 $_PAM_HANDLERS = array();
+
+global $_PAM_HANDLERS_MSG;
 $_PAM_HANDLERS_MSG = array();
 
 /**
@@ -57,6 +58,7 @@ function register_pam_handler($handler, $importance = "sufficient", $policy = "u
  *
  * @param string $handler The PAM handler function name
  * @param string $policy - the policy type, default is "user"
+ * @since 1.7.0
  */
 function unregister_pam_handler($handler, $policy = "user") {
 	global $_PAM_HANDLERS;

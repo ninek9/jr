@@ -5,10 +5,6 @@
 	 * This plugin lets user send each other messages.
 	 * 
 	 * @package ElggMessages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	/**
@@ -28,9 +24,9 @@
 				
 			//add submenu options
 				if (get_context() == "messages") {
-					add_submenu_item(elgg_echo('messages:compose'), $CONFIG->wwwroot . "mod/messages/send.php");
-					add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . $_SESSION['user']->username);
-					add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "mod/messages/sent.php");
+					add_submenu_item(elgg_echo('messages:compose'), $CONFIG->wwwroot . "pg/messages/compose/");
+					add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/inbox/" . get_loggedin_user()->username);
+					add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "pg/messages/sent/");
 				}
 				
 			// Extend system CSS with our own styles, which are defined in the shouts/css view
@@ -53,10 +49,7 @@
 				register_plugin_hook('notify:entity:message','object','messages_notification_msg');
 				if (is_callable('register_notification_object'))
 					register_notification_object('object','messages',elgg_echo('messages:new'));
-				
-		    // Shares widget
-			  //  add_widget_type('messages',elgg_echo("messages:recent"),elgg_echo("messages:widget:description"));
-			    
+							    
 			// Override metadata permissions
 			    register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
 		}
@@ -109,20 +102,8 @@
 			
 			if ($parameters['entity'] instanceof ElggEntity) {
 				
-				if ($parameters['entity']->getSubtype() == 'messages') {
-					
+				if ($parameters['entity']->getSubtype() == 'messages') {					
 					return false;
-					/*if (!$messages_pm) return false;
-					if ($parameters['method'] == 'email') {
-						return sprintf(
-									elgg_echo('messages:email:body'),
-									get_loggedin_user()->name,
-									strip_tags($parameters['entity']->description),
-									$CONFIG->wwwroot . "pg/messages/" . $user->username,
-									get_loggedin_user()->name,
-									$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_user()->guid
-								);
-					} else if ($parameters['method'] == 'site') return false;*/
 				}
 			}
 			return null;
@@ -180,7 +161,6 @@
 					$message_to->subtype = "messages";
 					$message_sent->subtype = "messages";
 			// Set its owner to the current user
-					// $message_to->owner_guid = $_SESSION['user']->getGUID();
 					$message_to->owner_guid = $send_to;
 					$message_to->container_guid = $send_to;
 					$message_sent->owner_guid = $from;
@@ -237,9 +217,9 @@
 									elgg_echo('messages:email:body'),
 									get_loggedin_user()->name,
 									$message_contents,
-									$CONFIG->wwwroot . "pg/messages/" . $user->username,
+									$CONFIG->wwwroot . "pg/messages/inbox/" . $user->username,
 									get_loggedin_user()->name,
-									$CONFIG->wwwroot . "mod/messages/send.php?send_to=" . get_loggedin_user()->guid
+									$CONFIG->wwwroot . "pg/messages/compose/?send_to=" . get_loggedin_user()->guid
 								)
 					);
 					
@@ -256,33 +236,47 @@
 		 */
 		function messages_page_handler($page) {
 			
-			// The first component of a messages URL is the username
-			if (isset($page[0])) {
-				set_input('username',$page[0]);
+			if (!isset($page[0])) {
+				$page[0] = 'inbox';
 			}
-			
-			// The second part dictates what we're doing
-			if (isset($page[1])) {
-				switch($page[1]) {
-					case "read":		set_input('message',$page[2]);
-										include(dirname(__FILE__) . "/read.php");
-										return true;
-										break;
-				}
-			// If the URL is just 'messages/username', or just 'messages/', load the standard messages index
-			} else {
-				include(dirname(__FILE__) . "/index.php");
-				return true;
+
+			// supporting the old inbox url /pg/messages/<username>
+			$user = get_user_by_username($page[0]);
+			if ($user) {
+				$page[1] = $page[0];
+				$page[0] = 'inbox';
 			}
-			
-			return false;
-			
+
+			if (!isset($page[1])) {
+				$page[1] = get_loggedin_user()->username;
+			}
+
+			switch ($page[0]) {
+				case 'inbox':
+					set_input('username', $page[1]);
+					include(dirname(__FILE__) . "/index.php");
+					break;
+				case 'sent':
+					include(dirname(__FILE__) . "/sent.php");
+					break;
+				case 'read':
+					set_input('message', $page[1]);
+					include(dirname(__FILE__) . "/read.php");
+					break;
+				case 'compose':
+					include(dirname(__FILE__) . "/send.php");
+					break;
+				default:
+					return false;
+			}
+
+			return true;
 		}
 
 		function messages_url($message) {
 			
 			global $CONFIG;
-			return $CONFIG->url . "pg/messages/" . $message->getOwnerEntity()->username . "/read/" . $message->getGUID();
+			return $CONFIG->url . "pg/messages/read/" . $message->getGUID();
 			
 		}
 		
@@ -290,20 +284,18 @@
         function count_unread_messages() {
             
             //get the users inbox messages
-		    //$num_messages = get_entities_from_metadata("toId", $_SESSION['user']->getGUID(), "object", "messages", 0, 10, 0, "", 0, false);
-		    $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
-		    							'toId' => $_SESSION['user']->guid,
+		    $num_messages = elgg_get_entities_from_metadata(array(
+				'metadata_name_value_pairs' => array(
+		    							'toId' => get_loggedin_userid(),
 		    							'readYet' => 0,
 		    							'msg' => 1
-		    									   ), 'types' => 'object', 'subtypes' => 'messages', 'owner_guid' => $_SESSION['user']->guid, 'limit' => 9999));
-		
-			if (is_array($num_messages))
-				$counter = sizeof($num_messages);
-			else
-				$counter = 0;
-				
-		    return $counter;
-            
+		    									   ),
+				'types' => 'object',
+				'subtypes' => 'messages',
+				'owner_guid' => get_loggedin_userid(),
+				'count' => TRUE));
+
+			return (int)$num_messages;
         }
         
         function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)

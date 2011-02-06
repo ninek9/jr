@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Test
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 class ElggCoreMetadataTest extends ElggCoreUnitTest {
 	protected $metastrings;
@@ -59,6 +57,7 @@ class ElggCoreMetadataTest extends ElggCoreUnitTest {
 		$this->create_metastring('metaUnitTest');
 		$this->create_metastring('tested');
 
+		// create_metadata returns id of metadata on success
 		$this->assertTrue(create_metadata($this->object->guid, 'metaUnitTest', 'tested'));
 
 		// check value with improper case

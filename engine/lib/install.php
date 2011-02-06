@@ -6,8 +6,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
@@ -40,9 +38,33 @@ function validate_platform() {
 		throw new ConfigurationException(elgg_echo('ConfigurationException:BadPHPVersion'));
 	}
 
-	// TODO: Consider checking for installed modules etc
+	// @todo Consider checking for installed modules etc
 	return true;
 }
+
+/**
+ * Confirm the settings for the database
+ *
+ * @param string $user
+ * @param string $password
+ * @param string $dbname
+ * @param string $host
+ * @return bool
+ * @since 1.7.1
+ */
+function db_check_settings($user, $password, $dbname, $host) {
+	$mysql_dblink = mysql_connect($host, $user, $password, true);
+	if ($mysql_dblink == FALSE) {
+		return $FALSE;
+	}
+
+	$result = mysql_select_db($dbname, $mysql_dblink);
+
+	mysql_close($mysql_dblink);
+	
+	return $result;
+}
+
 
 /**
  * Returns whether or not the database has been installed

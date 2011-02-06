@@ -4,10 +4,6 @@
 	 * Elgg group forum post edit/add page
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 * @uses $vars['entity'] Optionally, the post to edit
 	 */
@@ -33,8 +29,8 @@
 <?php 
 		echo elgg_view('input/securitytoken');
 ?>
-			<!-- display the save button -->
-			<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
+			<!-- display the post button -->
+			<input type="submit" class="submit_button" value="<?php echo elgg_echo('post'); ?>" />
 		</p>
 	
 	</form>

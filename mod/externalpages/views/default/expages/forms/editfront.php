@@ -4,10 +4,6 @@
 	 * Elgg edit frontpage
 	 * 
 	 * @package ElggExpages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 */
 	 
@@ -24,7 +20,6 @@
 			 $guid = $pc->guid;
 		 }
 	}else {		
-		$tags = "";
 		$description = "";
 	}
 		
@@ -63,7 +58,8 @@ EOT;
 <div class="expage_preview">
 <a name="preview"></a>
 <h2>Preview</h2>
-<?php 
+<?php
+/*
 	if($description_left){
 		echo "The left column header space<br />";
 		echo $description_left;
@@ -73,6 +69,7 @@ EOT;
 		echo $description_right;
 	}else
 		echo elgg_echo('expages:nopreview');
+ */
 ?>
 </div>
 -->

@@ -30,10 +30,10 @@
 	$formbody .= "</td>\n";
 	$formbody .= "<td class='custom_fields_add_form_table_right'>\n"; 
 	
-	$category_count = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
+	$category_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
 	
 	if($category_count > 0){
-		$categories = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, $category_count);
+		$categories = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, $category_count);
 		
 		$options = array();
 		

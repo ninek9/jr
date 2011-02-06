@@ -3,10 +3,6 @@
 	 * Elgg Pages
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	$parent_guid = get_input('parent_guid');
@@ -25,32 +21,37 @@
 			$vars['entity']->access_id = 0;
 			$vars['entity']->write_access_id = 0;
 		}
+
+		// pull in sticky values from session
+		if (isset($_SESSION['page_description'])) {
+			$vars['entity']->description = $_SESSION['page_description'];
+			$vars['entity']->tags = $_SESSION['page_tags'];
+			$vars['entity']->access_id = $_SESSION['page_read_access'];
+			$vars['entity']->write_access_id = $_SESSION['page_write_access'];
+
+			// clear them
+			unset($_SESSION['page_description']);
+			unset($_SESSION['page_tags']);
+			unset($_SESSION['page_read_access']);
+			unset($_SESSION['page_write_access']);
+		}
 	}
 ?>
 <div class="contentWrapper">
 <form action="<?php echo $vars['url']; ?>action/pages/edit" method="post">
-
 <?php
 	echo elgg_view('input/securitytoken'); 
 	if (is_array($vars['config']->pages) && sizeof($vars['config']->pages) > 0)
 		foreach($vars['config']->pages as $shortname => $valtype) {
-			
-			$disabled = "";
-			
-			if (!$new_page && ($shortname == 'title'))
-			{
-				$disabled = true;
-			}
 ?>
 
 	<p>
 		<label>
 			<?php echo elgg_echo("pages:{$shortname}") ?><br />
 			<?php echo elgg_view("input/{$valtype}",array(
-															'internalname' => $shortname,
-															'value' => $vars['entity']->$shortname,
-															'disabled' => $disabled
-															)); ?>
+				'internalname' => $shortname,
+				'value' => $vars['entity']->$shortname,
+			)); ?>
 		</label>
 	</p>
 

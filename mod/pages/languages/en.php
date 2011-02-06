@@ -3,10 +3,6 @@
 	 * Elgg pages plugin language pack
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	$english = array(
@@ -27,7 +23,7 @@
 			'pages:history' => "Page history",
 			'pages:view' => "View page",
 			'pages:welcome' => "Edit welcome message",
-			'pages:welcomemessage' => "Welcome to this Elgg pages plugin. This feature allows you to create pages on any topic and select who can view them and edit them.",
+			'pages:welcomemessage' => "Welcome to the pages tool of %s. This tool allows you to create pages on any topic and select who can view them and edit them.",
 			'pages:welcomeerror' => "There was a problem saving your welcome message",
 			'pages:welcomeposted' => "Your welcome message has been posted",
 			'pages:navigation' => "Page navigation",
@@ -65,11 +61,11 @@
 		 * Status and error messages
 		 */
 			'pages:noaccess' => 'No access to page',
-			'pages:cantedit' => 'You can not edit this page',
-			'pages:saved' => 'Pages saved',
+			'pages:cantedit' => 'You cannot edit this page',
+			'pages:saved' => 'Page saved',
 			'pages:notsaved' => 'Page could not be saved',
 			'pages:notitle' => 'You must specify a title for your page.',
-			'pages:delete:success' => 'Your page was successfully deleted.',
+			'pages:delete:success' => 'The page was successfully deleted.',
 			'pages:delete:failure' => 'The page could not be deleted.',
 	
 		/**

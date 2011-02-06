@@ -5,10 +5,6 @@
 	 *
 	 * @package Elgg
 	 * @subpackage Core
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
 	 *
 	 */
 
@@ -37,6 +33,8 @@
 	} else {
 		$nonefound = true;
 	}
+
+	$baseurl = $vars['baseurl'];
 
 	$totalpages = ceil($count / $limit);
 	$currentpage = ceil($offset / $limit) + 1;
@@ -97,7 +95,7 @@
 			}
 
 			$curoffset = (($i - 1) * $limit);
-			$counturl = elgg_http_add_url_query_elements($base_url, array($word => $curoffset));
+			$counturl = elgg_http_add_url_query_elements($baseurl, array($word => $curoffset));
 
 			if ($curoffset != $offset) {
 				echo " <a onclick=\"javascript:$('.popup .content').load('{$counturl}'); return false\" href=\"#\" class=\"pagination_number\">{$i}</a> ";

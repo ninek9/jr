@@ -4,10 +4,6 @@
 	 * Elgg groups 'member of' page
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
@@ -26,7 +22,7 @@
 	$area2 = elgg_view_title($title);
 	
 	set_context('search');
-	//$objects = list_entities("group", "", page_owner(), $limit, false);
+	// offset is grabbed in the list_entities_from_relationship() function
 	$objects = list_entities_from_relationship('member',page_owner(),false,'group','',0, $limit,false, false);
 	set_context('groups');
 	

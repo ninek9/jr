@@ -3,9 +3,6 @@
  * Elgg htmLawed tag filtering.
  *
  * @package ElgghtmLawed
- * @author Curverider Ltd
- * @author Brett Profitt
- * @link http://elgg.com/
  */
 
 /**
@@ -13,7 +10,7 @@
  *
  */
 function htmlawed_init() {
-	/** For now declare allowed tags and protocols here, TODO: Make this configurable */
+	/** For now declare allowed tags and protocols here, @todo Make this configurable */
 	global $CONFIG;
 	$CONFIG->htmlawed_config = array(
 		// seems to handle about everything we need.
@@ -107,16 +104,23 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 			$return = "";
 			$return = htmLawed($var, $htmlawed_config);
 		} else {
-			$return = array();
+			
+			array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
 
-			foreach($var as $key => $el) {
-				$return[$key] = htmLawed($el, $htmlawed_config);
-			}
+			$return = $var;
 		}
 	}
 
 	return $return;
 }
+
+/**
+ * wrapper function for htmlawed for handling arrays
+ */
+function htmLawedArray(&$v, $k, $htmlawed_config) {
+	$v = htmLawed($v, $htmlawed_config);
+}
+
 
 
 register_elgg_event_handler('init', 'system', 'htmlawed_init');

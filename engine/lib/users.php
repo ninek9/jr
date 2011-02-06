@@ -5,14 +5,14 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /// Map a username to a cached GUID
+global $USERNAME_TO_GUID_MAP_CACHE;
 $USERNAME_TO_GUID_MAP_CACHE = array();
 
 /// Map a user code to a cached GUID
+global $CODE_TO_GUID_MAP_CACHE;
 $CODE_TO_GUID_MAP_CACHE = array();
 
 /**
@@ -43,6 +43,7 @@ class ElggUser extends ElggEntity
 		$this->attributes['language'] = "";
 		$this->attributes['code'] = "";
 		$this->attributes['banned'] = "no";
+		$this->attributes['admin'] = 'no';
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -200,6 +201,46 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
+	 * Is this user admin?
+	 *
+	 * @return bool
+	 */
+	public function isAdmin() {
+
+		// for backward compatibility we need to pull this directly
+		// from the attributes instead of using the magic methods.
+		// this can be removed in 1.9
+		// return $this->admin == 'yes';
+		return $this->attributes['admin'] == 'yes';
+	}
+
+	/**
+	 * Make the user an admin
+	 *
+	 * @return bool
+	 */
+	public function makeAdmin() {
+		if (make_user_admin($this->guid)) {
+			$this->attributes['admin'] = 'yes';
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Remove the admin flag for user
+	 *
+	 * @return bool
+	 */
+	public function removeAdmin() {
+		if (remove_user_admin($this->guid)) {
+			$this->attributes['admin'] = 'no';
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
 	 * Get sites that this user is a member of
 	 *
 	 * @param string $subtype Optionally, the subtype of result we want to limit to
@@ -339,18 +380,6 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Get the collections associated with a user.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int $limit The number of results to return
-	 * @param int $offset Any indexing offset
-	 * @return unknown
-	 */
-	public function getCollections($subtype="", $limit = 10, $offset = 0) {
-		return get_user_collections($this->getGUID(), $subtype, $limit, $offset);
-	}
-
-	/**
 	 * If a user's owner is blank, return its own GUID as the owner
 	 *
 	 * @return int User GUID
@@ -374,6 +403,30 @@ class ElggUser extends ElggEntity
 			'username',
 			'language',
 		));
+	}
+
+	// backward compatibility with admin flag
+	// remove for 1.9
+	public function __set($name, $value) {
+		if ($name == 'admin' || $name == 'siteadmin') {
+			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->makeAdmin() and ElggUser->removeAdmin().', '1.7.1');
+
+			if ($value == 'yes' || $value == '1') {
+				$this->makeAdmin();
+			} else {
+				$this->removeAdmin();
+			}
+		}
+		return parent::__set($name, $value);
+	}
+
+	public function __get($name) {
+		if ($name == 'admin' || $name == 'siteadmin') {
+			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->isAdmin().', '1.7.1');
+			return $this->isAdmin();
+		}
+
+		return parent::__get($name);
 	}
 }
 
@@ -501,9 +554,11 @@ function ban_user($user_guid, $reason = "") {
 			// Set ban flag
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
 		}
+
+		return FALSE;
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
@@ -534,16 +589,88 @@ function unban_user($user_guid) {
 
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid");
 		}
+
+		return FALSE;
 	}
 
-	return false;
+	return FALSE;
+}
+
+/**
+ * Makes user $guid an admin.
+ *
+ * @param int $guid
+ * @return bool
+ */
+function make_user_admin($user_guid) {
+	global $CONFIG;
+
+	$user = get_entity((int)$user_guid);
+
+	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
+		if (trigger_elgg_event('make_admin', 'user', $user)) {
+
+			// invalidate memcache for this user
+			static $newentity_cache;
+			if ((!$newentity_cache) && (is_memcache_available())) {
+				$newentity_cache = new ElggMemcache('new_entity_cache');
+			}
+
+			if ($newentity_cache) {
+				$newentity_cache->delete($user_guid);
+			}
+
+			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
+			invalidate_cache_for_entity($user_guid);
+			return $r;
+		}
+
+		return FALSE;
+	}
+
+	return FALSE;
+}
+
+/**
+ * Removes user $guid's admin flag.
+ *
+ * @param int $guid
+ * @return bool
+ */
+function remove_user_admin($user_guid) {
+	global $CONFIG;
+
+	$user = get_entity((int)$user_guid);
+
+	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
+		if (trigger_elgg_event('remove_admin', 'user', $user)) {
+
+			// invalidate memcache for this user
+			static $newentity_cache;
+			if ((!$newentity_cache) && (is_memcache_available())) {
+				$newentity_cache = new ElggMemcache('new_entity_cache');
+			}
+
+			if ($newentity_cache) {
+				$newentity_cache->delete($user_guid);
+			}
+
+			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
+			invalidate_cache_for_entity($user_guid);
+			return $r;
+		}
+
+		return FALSE;
+	}
+
+	return FALSE;
 }
 
 /**
  * THIS FUNCTION IS DEPRECATED.
  *
  * Delete a user's extra data.
- *
+ * @todo remove
  * @param int $guid
  */
 function delete_user_entity($guid) {
@@ -615,8 +742,10 @@ function user_remove_friend($user_guid, $friend_guid) {
 
 	// perform cleanup for access lists.
 	$collections = get_user_access_collections($user_guid);
-	foreach ($collections as $collection) {
-		remove_user_from_access_collection($friend_guid, $collection->id);
+	if ($collections) {
+		foreach ($collections as $collection) {
+			remove_user_from_access_collection($friend_guid, $collection->id);
+		}
 	}
 
 	return remove_entity_relationship($user_guid, "friend", $friend_guid);
@@ -1154,10 +1283,10 @@ function elgg_user_resetpassword_page_handler($page) {
 		'action' => $CONFIG->site->url . 'action/user/passwordreset'
 	));
 
-	$content = elgg_view_title(elgg_echo('resetpassword'));
-	$content .= elgg_view('page_elements/contentwrapper', array('body' => $form));
+	$title = elgg_echo('resetpassword');
+	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
 
-	page_draw($title, $content);
+	page_draw($title, elgg_view_layout('one_column', $content));
 }
 
 /**
@@ -1221,7 +1350,7 @@ function request_user_validation($user_guid) {
  * @return bool
  */
 function is_email_address($address) {
-	// TODO: Make this better!
+	// @todo Make this better!
 
 	if (strpos($address, '@')=== false) {
 		return false;
@@ -1293,11 +1422,12 @@ function validate_username($username) {
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
 
-	// Belts and braces TODO: Tidy into main unicode
-	$blacklist2 = '/\\"\'*& ?#%^(){}[]~?<>;|¬`@-+=';
+	// Belts and braces
+	// @todo Tidy into main unicode
+	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@-+=';
 	for ($n=0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n])!==false) {
-			throw new RegistrationException(elgg_echo('registration:invalidchars'));
+			throw new RegistrationException(sprintf(elgg_echo('registration:invalidchars'), $blacklist2[$n], $blacklist2));
 		}
 	}
 
@@ -1355,7 +1485,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	$username = trim($username);
 	// no need to trim password.
 	$password = $password;
-	$name = trim($name);
+	$name = trim(strip_tags($name));
 	$email = trim($email);
 
 	// A little sanity checking
@@ -1398,10 +1528,6 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 
 	access_show_hidden_entities($access_status);
 
-	// Check to see if we've registered the first admin yet.
-	// If not, this is the first admin user!
-	$have_admin = datalist_get('admin_registered');
-
 	// Otherwise ...
 	$user = new ElggUser();
 	$user->username = $username;
@@ -1428,9 +1554,13 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 		}
 	}
 
+	// Check to see if we've registered the first admin yet.
+	// If not, this is the first admin user!
+	$have_admin = datalist_get('admin_registered');
 	global $registering_admin;
+
 	if (!$have_admin) {
-		$user->admin = true;
+		$user->makeAdmin();
 		set_user_validation_status($user->getGUID(), TRUE, 'first_run');
 		datalist_set('admin_registered', 1);
 		$registering_admin = true;
@@ -1463,7 +1593,7 @@ function collections_submenu_items() {
 	global $CONFIG;
 	$user = get_loggedin_user();
 	add_submenu_item(elgg_echo('friends:collections'), $CONFIG->wwwroot . "pg/collections/" . $user->username);
-	add_submenu_item(elgg_echo('friends:collections:add'),$CONFIG->wwwroot."pg/collections/add");
+	add_submenu_item(elgg_echo('friends:collections:add'), $CONFIG->wwwroot . "pg/collections/add");
 }
 
 /**
@@ -1474,10 +1604,9 @@ function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if ($_SESSION['guid'] == page_owner()) {
+	if (get_loggedin_userid() == page_owner()) {
 		collections_submenu_items();
 	}
-
 	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/index.php");
 }
 
@@ -1489,26 +1618,26 @@ function friends_of_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if ($_SESSION['guid'] == page_owner()) {
+	if (get_loggedin_userid() == page_owner()) {
 		collections_submenu_items();
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
 }
 
 /**
- * Page handler for friends of
+ * Page handler for friends collections
  *
  */
 function collections_page_handler($page_elements) {
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
-			set_page_owner($_SESSION['guid']);
+			set_page_owner(get_loggedin_userid());
 			collections_submenu_items();
 			require_once(dirname(dirname(dirname(__FILE__))) . "/friends/add.php");
 		} else {
 			if ($user = get_user_by_username($page_elements[0])) {
 				set_page_owner($user->getGUID());
-				if ($_SESSION['guid'] == page_owner()) {
+				if (get_loggedin_userid() == page_owner()) {
 					collections_submenu_items();
 				}
 				require_once(dirname(dirname(dirname(__FILE__))) . "/friends/collections.php");
@@ -1562,7 +1691,7 @@ function set_last_login($user_guid) {
  * A permissions plugin hook that grants access to users if they are newly created - allows
  * for email activation.
  *
- * TODO: Do this in a better way!
+ * @todo Do this in a better way!
  *
  * @param unknown_type $hook
  * @param unknown_type $entity_type
@@ -1626,7 +1755,7 @@ function users_init() {
 	// Set up menu for logged in users
 	if (isloggedin()) {
 		$user = get_loggedin_user();
-		//add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username);
+		add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username);
 	}
 
 	register_page_handler('friends', 'friends_page_handler');
@@ -1647,8 +1776,8 @@ function users_init() {
 
 	register_action("usersettings/save");
 
-	register_action("user/passwordreset");
-	register_action("user/requestnewpassword");
+	register_action("user/passwordreset", TRUE);
+	register_action("user/requestnewpassword", TRUE);
 
 	// User name change
 	extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
@@ -1678,7 +1807,7 @@ function users_init() {
 	register_elgg_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 
 	// Handle a special case for newly created users when the user is not logged in
-	// TODO: handle this better!
+	// @todo handle this better!
 	register_plugin_hook('permissions_check','all','new_user_enable_permissions_check');
 }
 

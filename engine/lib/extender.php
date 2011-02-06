@@ -5,14 +5,11 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
  * ElggExtender
  *
- * @author Curverider Ltd
  * @package Elgg
  * @subpackage Core
  */
@@ -87,6 +84,7 @@ abstract class ElggExtender implements
 	 * Return the owner entity
 	 *
 	 * @return mixed
+	 * @since 1.7.0
 	 */
 	public function getOwnerEntity() {
 		return get_user($this->owner_guid);
@@ -263,7 +261,7 @@ abstract class ElggExtender implements
  * Detect the value_type for a given value.
  * Currently this is very crude.
  *
- * TODO: Make better!
+ * @todo Make better!
  *
  * @param mixed $value
  * @param string $value_type If specified, overrides the detection.

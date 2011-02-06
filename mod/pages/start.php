@@ -3,10 +3,6 @@
 	 * Elgg Pages
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	/**
@@ -24,7 +20,7 @@
 		}
 		else
 		{
-			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "mod/pages/world.php");
+			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "pg/pages/all/");
 		}
 		
 		// Extend hover-over menu	
@@ -82,12 +78,9 @@
 	}
 	
 	function pages_url($entity) {
-		
 		global $CONFIG;
-		
-		
-		return $CONFIG->url . "pg/pages/view/{$entity->guid}/";
-		
+		$title = elgg_get_friendly_title($entity->title);
+		return $CONFIG->url . "pg/pages/view/{$entity->guid}/$title";
 	}
 	
 	/**
@@ -124,23 +117,26 @@
 			// See what context we're using
 			switch($page[0])
 			{
-				case "new" :
+				case "new":
 					include($CONFIG->pluginspath . "pages/new.php");
           		break;
-          		case "welcome" :
+          		case "welcome":
+					if (isset($page[1])) {
+						set_input('username', $page[1]);
+					}
 					include($CONFIG->pluginspath . "pages/welcome.php");
           		break;
-    			case "world":  
+    			case "all":
    					include($CONFIG->pluginspath . "pages/world.php");
           		break;
-    			case "owned" :
+    			case "owned":
     				// Owned by a user
     				if (isset($page[1]))
     					set_input('username',$page[1]);
     					
     				include($CONFIG->pluginspath . "pages/index.php");	
     			break;
-    			case "edit" :
+    			case "edit":
     				if (isset($page[1]))
     					set_input('page_guid', $page[1]);
     					
@@ -152,7 +148,7 @@
 
     				include($CONFIG->pluginspath . "pages/edit.php");
     			break;
-    			case "view" :
+    			case "view":
     				
     				if (isset($page[1]))
     					set_input('page_guid', $page[1]);
@@ -166,7 +162,7 @@
     					
     				include($CONFIG->pluginspath . "pages/view.php");
     			break;   
-    			case "history" :
+    			case "history":
     				if (isset($page[1]))
     					set_input('page_guid', $page[1]);
     					
@@ -214,7 +210,7 @@
 					$owner = $entity->getOwnerEntity();
 					return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 				}
-				if ($method == 'web') {
+				if ($method == 'site') {
 					$owner = $entity->getOwnerEntity();
 					return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 				}
@@ -333,6 +329,26 @@
 			}
 		}
 		
+	}
+
+	/**
+	 * Does user have permissions to create subpage or delete
+	 * 
+	 * @param ElggEntity $container_entity
+	 * @return bool
+	 */
+	function pages_has_full_permissions($container_entity) {
+		if (!isloggedin()) {
+			return false;
+		}
+
+		if (get_loggedin_userid() == $container_entity->guid) {
+			return true;
+		} elseif ($container_entity instanceof ElggGroup) {
+			return $container_entity->isMember();
+		}
+
+		return false;
 	}
 	
 	// write permission plugin hooks

@@ -35,10 +35,10 @@ if (!$size || $size == 1){
 //);
 //$invited_count = get_entities_from_metadata_multi($constraints, 'object', 'invitation', $owner->getGUID(), limit, offset, orderby. site, true);
 
-$invited_count = get_entities_from_metadata('used', true, 'object', 'invitation', $owner->getGUID(), 
+$invited_count = elgg_get_entities_from_metadata('used', true, 'object', 'invitation', $owner->getGUID(), 
 	$limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = true);
 
-$sent = get_entities('object', 'invitation', $owner->getGUID(), $orderby='', $limit='', $offset='', $count=true, $site='');
+$sent = elgg_get_entities('object', 'invitation', $owner->getGUID(), $orderby='', $limit='', $offset='', $count=true, $site='');
 
 // get a msg to display...
 if ($invited_count == 1) {
@@ -60,7 +60,7 @@ $content = "<h3>$header</h3>
 // if a user is banned, deleted, or still unvalidated
 // he will not show up in the listed objects below.
 if ($num_display > 0) {
-	$invited_entities = get_entities_from_metadata('used', true, 'object', 'invitation', $owner->getGUID(), $limit=$num_display);
+	$invited_entities = elgg_get_entities_from_metadata('used', true, 'object', 'invitation', $owner->getGUID(), $limit=$num_display);
 	
 	$content .= '<hr /><h3>' . elgg_echo('oi:widget:my_invited_users') . '</h3>
 		<div class="oi_widget_invited_users_list">';

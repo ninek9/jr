@@ -57,7 +57,7 @@
 			}
 			
 			// add correct order
-			$count = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
+			$count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
 			
 			if($add){
 				$object->order = $count;

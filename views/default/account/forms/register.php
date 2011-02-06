@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $username = get_input('u');
@@ -13,7 +11,9 @@ $email = get_input('e');
 $name = get_input('n');
 
 $admin_option = false;
-if (($_SESSION['user']->admin) && ($vars['show_admin'])) {
+$loggedin_user = get_loggedin_user();
+
+if ($loggedin_user && $loggedin_user->isAdmin() && isset($vars['show_admin'])) {
 	$admin_option = true;
 }
 

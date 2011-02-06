@@ -3,10 +3,6 @@
 	 * Elgg Pages Edit welcome page
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 	 
 	 //set some variables
@@ -19,7 +15,7 @@
 	 }else{
     	 $current_message = '';
     	 $object_guid = '';
-    	 $access_id = ACCESS_PRIVATE;
+    	 $access_id = ACCESS_PUBLIC;
 	 }
 	 
 	 $page_owner = $vars['owner']->guid;
@@ -31,10 +27,10 @@
     <p class="longtext_editarea">
 		<label>
 			<?php echo elgg_view("input/longtext",array(
-															'internalname' => "pages_welcome",
-															'value' => $current_message,
-															'disabled' => $disabled
-															)); ?>
+				'internalname' => "pages_welcome",
+				'value' => $current_message,
+				'disabled' => $disabled
+			)); ?>
 		</label>
 	</p>
 	<p>

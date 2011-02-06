@@ -3,13 +3,13 @@
 $fc = fbconnect_client();
 $fbuid = $fc->get_loggedin_user();
 if ($fbuid) {    
-	$entities = get_entities_from_metadata('facebook_uid', $fbuid, 'user', 'facebook');
+	$entities = elgg_get_entities_from_metadata('facebook_uid', $fbuid, 'user', 'facebook');
 	$do_login = false;
 	$duplicate_acccount = false;
 
 	if (!$entities || $entities[0]->active == 'no') {
 		if (!$entities) {
-			$entities = get_entities_from_metadata('facebook_uid', $fbuid, 'user');
+			$entities = elgg_get_entities_from_metadata('facebook_uid', $fbuid, 'user');
 			if (!$entities) {
 				// this account does not exist, so create it
 				

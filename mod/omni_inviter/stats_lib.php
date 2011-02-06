@@ -28,7 +28,7 @@ function oi_make_stats($start_date=0, $end_date=null, $data_points=30) {
 	if ($data_points == 0) { return false; }
 	
 	// figure out how many we need to average together for a data point.
-	$invites_count = get_entities($type='object', $subtype='invitation', $owner_guid=null, $order_by=null, $limit, 
+	$invites_count = elgg_get_entities($type='object', $subtype='invitation', $owner_guid=null, $order_by=null, $limit, 
 		$offset, $count=true, $site_guid=null, $container_guid=null, $timelower=$start_date, $timeupper=$end_date);
 		
 	$invites_count_dec = $invites_count;
@@ -62,7 +62,7 @@ function oi_make_stats($start_date=0, $end_date=null, $data_points=30) {
 	$offset = 0;
 	oi_su();
 
-	$invites = get_entities($type='object', $subtype='invitation', $owner_guid=null, $order_by='time_created asc', $limit, 
+	$invites = elgg_get_entities($type='object', $subtype='invitation', $owner_guid=null, $order_by='time_created asc', $limit, 
 		$offset, $count=false, $site_guid=null, $container_guid=null, $timelower=$start_date, $timeupper=$end_date);
 	
 	$result = (is_array($invites));
@@ -88,7 +88,7 @@ function oi_make_stats($start_date=0, $end_date=null, $data_points=30) {
 			$invites_count_dec--;
 		}
 		$offset += $limit;
-		$invites = get_entities($type='object', $subtype='invitation', $owner_guid=null, $order_by=null, $limit, 
+		$invites = elgg_get_entities($type='object', $subtype='invitation', $owner_guid=null, $order_by=null, $limit, 
 			$offset, $count=false, $site_guid=null, $container_guid=null, $timelower=$start_date, $timeupper=$end_date);
 	}
 	oi_su(true);
@@ -109,7 +109,7 @@ function oi_get_invitation_count($status, $start_date=0, $end_date=null) {
 	switch ($status) {
 		default:
 		case 'created':
-			return get_entities('object', 'invitation', null, null, 99999, null, true, null, null, $start_date, $end_date);
+			return elgg_get_entities('object', 'invitation', null, null, 99999, null, true, null, null, $start_date, $end_date);
 			break;
 		
 		case 'sent':

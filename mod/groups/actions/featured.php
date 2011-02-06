@@ -4,10 +4,6 @@
 	 * Join a group action.
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Load configuration
@@ -16,7 +12,7 @@
 	admin_gatekeeper();
 	
 	$group_guid = get_input('group_guid');
-	$action = get_input('action');
+	$action = get_input('action_type');
 	
 	$group = get_entity($group_guid);
 	
@@ -39,6 +35,6 @@
 		
 	}
 	
-	forward("pg/groups/world/");
+	forward(REFERER);
 	
 ?>

@@ -9,7 +9,7 @@
 			'blog' => "Blog",
 			'blogs' => "Blogs",
 			'blog:user' => "%s's blog",
-			'blog:user:friends' => "%s's friends' blog",
+			'blog:user:friends' => "%s's friends' blogs",
 			'blog:your' => "Your blog",
 			'blog:posttitle' => "%s's blog: %s",
 			'blog:friends' => "Friends' blogs",
@@ -34,14 +34,25 @@
 			'blog:draft:save' => 'Save draft',
 			'blog:draft:saved' => 'Draft last saved',
 			'blog:comments:allow' => 'Allow comments',
+			'blog:conversation' => 'Conversation',
 	
 			'blog:preview:description' => 'This is an unsaved preview of your blog post.',
 			'blog:preview:description:link' => 'To continue editing or save your post, click here.',
 	
-			'blog:enableblog' => 'Enable group blog',
-	
+			'groups:enableblog' => 'Enable group blog',
 			'blog:group' => 'Group blog',
-			
+			'blog:nogroup' => 'This group does not have any blog posts yet',
+			'blog:more' => 'More blog posts',
+	
+			'blog:read_more' => 'Read full post',
+
+		/**
+		 * Blog widget
+		 */
+		'blog:widget:description' => 'This widget displays your latest blog entries.',
+		'blog:moreblogs' => 'More blog posts',
+		'blog:numbertodisplay' => 'Number of blog posts to display',
+		
          /**
 	     * Blog river
 	     **/

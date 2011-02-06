@@ -6,15 +6,10 @@
  *
  * @package Elgg
  * @subpackage Core
-
- * @author Curverider Ltd
-
- * @link http://elgg.org/
  */
 
 /**
  * @class ElggGroup Class representing a container for other elgg entities.
- * @author Curverider Ltd
  */
 class ElggGroup extends ElggEntity
 	implements Friendable {
@@ -460,14 +455,12 @@ function remove_object_from_group($group_guid, $object_guid) {
  * @param unknown_type $offset Where to start, by default 0.
  * @param unknown_type $count Whether to return the entities or a count of them.
  */
-function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false) {
+function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
 	global $CONFIG;
 
-	if ($subtype === false || $subtype === null || $subtype === 0) {
-		return false;
+	if ($subtype === FALSE || $subtype === null || $subtype === 0) {
+		return FALSE;
 	}
-
-	$subtype = get_subtype_id('object', $subtype);
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -488,7 +481,11 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	$where = array();
 
 	$where[] = "e.type='object'";
-	if ($subtype!=="") {
+
+	if (!empty($subtype)) {
+		if (!$subtype = get_subtype_id('object', $subtype)) {
+			return FALSE;
+		}
 		$where[] = "e.subtype=$subtype";
 	}
 	if ($owner_guid != "") {
@@ -842,6 +839,7 @@ function group_gatekeeper($forward = true) {
 	}
 
 	if ($forward && $allowed == false) {
+		register_error(elgg_echo('membershiprequired'));
 		forward($url);
 		exit;
 	}
@@ -850,15 +848,16 @@ function group_gatekeeper($forward = true) {
 }
 
 /**
- * Manages group tool options
+ * Adds a group tool option
+ *
+ * @see remove_group_tool_option().
  *
  * @param string $name Name of the group tool option
  * @param string $label Used for the group edit form
  * @param boolean $default_on True if this option should be active by default
  *
- **/
-
-function add_group_tool_option($name,$label,$default_on=true) {
+ */
+function add_group_tool_option($name, $label, $default_on=true) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->group_tool_options)) {
@@ -872,6 +871,28 @@ function add_group_tool_option($name,$label,$default_on=true) {
 	$group_tool_option->default_on = $default_on;
 
 	$CONFIG->group_tool_options[] = $group_tool_option;
+}
+
+/**
+ * Removes a group tool option based on name
+ *
+ * @see add_group_tool_option()
+ *
+ * @param string $name Name of the group tool option
+ *
+ */
+function remove_group_tool_option($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->group_tool_options)) {
+		return;
+	}
+
+	foreach ($CONFIG->group_tool_options as $i => $option) {
+		if ($option->name == $name) {
+			unset($CONFIG->group_tool_options[$i]);
+		}
+	}
 }
 
 /**
@@ -971,8 +992,7 @@ function list_group_search($tag, $limit = 10) {
  *
  */
 function group_init() {
-	// Register an entity type
-	register_entity_type('group','');
+	
 }
 
 register_elgg_event_handler('init','system','group_init');

@@ -9,7 +9,7 @@
  * @link http://eschoolconsultants.com
  */
 
-$consequences = get_entities('object', 'demerit_consequence');
+$consequences = elgg_get_entities('object', 'demerit_consequence');
 
 $consequences_order_state = array();
 foreach ($consequences as $consequence) {

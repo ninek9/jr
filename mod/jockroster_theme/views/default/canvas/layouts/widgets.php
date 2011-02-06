@@ -266,7 +266,7 @@ $token = generate_action_token($ts);
 <!-- #widgets_right -->
 <div id="widgets_right">
 	<?php // don't show edit layout button to admins for testing.  admins WILL have layout editing privileges in production.
-	if($vars['user']->admin || $vars['user']->siteadmin){ ?>
+	if($vars['user']->isAdmin()) { ?>
 	<!-- customise page button -->
 	<a href="javascript:void(0);" class="toggle_customise_edit_panel"><?php echo(elgg_echo('dashboard:configure')); ?></a>
 	<!-- <div style="clear:both;"></div> -->

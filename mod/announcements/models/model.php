@@ -21,7 +21,7 @@
 */
 
 function announcements_get_entities($limit = 0, $offset = 0){
-	$entities = get_entities('object', 'announcement', 0, '', $limit, $offset);
+	$entities = elgg_get_entities('object', 'announcement', 0, '', $limit, $offset);
     return $entities; 
 }
 

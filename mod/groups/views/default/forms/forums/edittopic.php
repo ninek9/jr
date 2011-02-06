@@ -4,10 +4,6 @@
 	 * Elgg Groups topic edit/add page
 	 * 
 	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 * @uses $vars['entity'] Optionally, the topic to edit
 	 */
@@ -34,7 +30,7 @@
 	    echo elgg_view_title(elgg_echo("groups:edittopic"));
 	 
 ?>
-
+<div class="contentWrapper">
 <!-- display the input form -->
 	<form action="<?php echo $vars['url']; ?>action/groups/edittopic" method="post">
 	<?php echo elgg_view('input/securitytoken'); ?>
@@ -83,8 +79,6 @@
 		    <label><?php echo elgg_echo("groups:topicstatus"); ?><br />
 		    <select name="status">
 		        <option value="open" <?php if($status == "") echo "SELECTED";?>><?php echo elgg_echo('groups:topicopen'); ?></option>
-		        <option value="sticky" <?php if($status == "sticky") echo "SELECTED";?>><?php echo elgg_echo('groups:topicsticky'); ?></option>
-		        <option value="resolved" <?php if($status == "resolved") echo "SELECTED";?>><?php echo elgg_echo('groups:topicresolved'); ?></option>
 		        <option value="closed" <?php if($status == "closed") echo "SELECTED";?>><?php echo elgg_echo('groups:topicclosed'); ?></option>
 		    </select>
 		    </label>
@@ -107,3 +101,4 @@
 		</p>
 	
 	</form>
+</div>

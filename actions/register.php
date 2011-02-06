@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 global $CONFIG;
@@ -25,15 +23,25 @@ if (is_array($admin)) {
 }
 
 if (!$CONFIG->disable_registration) {
-// For now, just try and register the user
 	try {
+		if (trim($password) == "" || trim($password2) == "") {
+			throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
+		}
+
+		if (strcmp($password, $password2) != 0) {
+			throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
+		}
+
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
-		if (((trim($password) != "") && (strcmp($password, $password2) == 0)) && ($guid)) {
+		if ($guid) {
 			$new_user = get_entity($guid);
+
+			// @todo - consider removing registering admins since this is done
+			// through the useradd action
 			if (($guid) && ($admin)) {
 				// Only admins can make someone an admin
 				admin_gatekeeper();
-				$new_user->admin = 'yes';
+				$new_user->makeAdmin();
 			}
 
 			// Send user validation request on register only
@@ -42,7 +50,7 @@ if (!$CONFIG->disable_registration) {
 				request_user_validation($guid);
 			}
 
-			if (!$new_user->admin) {
+			if (!$new_user->isAdmin()) {
 				// Now disable if not an admin
 				// Don't do a recursive disable.  Any entities owned by the user at this point
 				// are products of plugins that hook into create user and might need
@@ -64,8 +72,4 @@ if (!$CONFIG->disable_registration) {
 	register_error(elgg_echo('registerdisabled'));
 }
 
-$qs = explode('?',$_SERVER['HTTP_REFERER']);
-$qs = $qs[0];
-$qs .= "?u=" . urlencode($username) . "&e=" . urlencode($email) . "&n=" . urlencode($name) . "&friend_guid=" . $friend_guid;
-
-forward($qs);
+forward(REFERER);

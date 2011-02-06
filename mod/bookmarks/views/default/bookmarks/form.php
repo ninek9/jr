@@ -4,10 +4,6 @@
 	 * Elgg bookmarks plugin form
 	 * 
 	 * @package ElggBookmarks
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
 	 */
 
 	// Have we been supplied with an entity?
@@ -27,6 +23,7 @@
 			
 			$guid = 0;
 			$title = get_input('title',"");
+			$title = stripslashes($title); // strip slashes from URL encoded apostrophes
 			$description = "";
 			$address = get_input('address',"");
 			$highlight = 'all';
@@ -40,8 +37,7 @@
 			else
 				$access_id = 0;
 			$shares = array();
-			$owner = $vars['user'];
-			
+			$owner = page_owner_entity();		
 		}
 
 ?>

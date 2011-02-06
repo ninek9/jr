@@ -1,14 +1,10 @@
 <?php
 
-	/**
-	 * Elgg riverdashboard CSS
-	 * 
-	 * @package riverdashboard
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
-	 */
+/**
+ * Elgg riverdashboard CSS
+ * 
+ * @package ElggRiverDash
+ */
 
 ?>
 .sidebarBox #thewire_sidebarInputBox {
@@ -51,15 +47,18 @@
 	height:auto;
 }
 .sidebarBox .membersWrapper {
-	padding: 0 10px;	
+	background: white;
+	-webkit-border-radius: 8px; 
+	-moz-border-radius: 8px;
+	padding:7px;	
 }
 .sidebarBox .membersWrapper .recentMember {
-	margin: 2px;
-	float: left;
+	margin:2px;
+	float:left;
 }
 .sidebarBox .membersWrapper .recentMember .usericon img {
-	width: 25px;
-	height: 25px;
+	width:25px;
+	height:25px;
 }
 /* br necessary for ie6 & 7 */
 .sidebarBox .membersWrapper br {
@@ -141,5 +140,4 @@
 	width:40px;
 	height:40px;
 }
-
 

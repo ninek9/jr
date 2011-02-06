@@ -5,66 +5,90 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 // Get DB settings, connect
 require_once(dirname(dirname(__FILE__)). '/engine/settings.php');
 
 global $CONFIG, $viewinput, $override;
+
 if (!isset($override)) {
-	$override = false;
+	$override = FALSE;
 }
 
 $contents = '';
+
 if (!isset($viewinput)) {
 	$viewinput = $_GET;
 }
 
-if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true)) {
-	$view = $viewinput['view'];
-	$viewtype = $viewinput['viewtype'];
-	if (empty($viewtype)) {
-		$viewtype = 'default';
-	}
+$viewtype = isset($viewinput['viewtype']) ? $viewinput['viewtype'] : 'default';
+if (empty($viewtype)) {
+	$viewtype = 'default';
+}
 
-	if (@mysql_select_db($CONFIG->dbname,$mysql_dblink)) {
-		// get dataroot and simplecache_enabled in one select for efficiency
-		$simplecache_enabled = true;
-		if (!isset($dataroot)) {
-			if ($result = mysql_query("select name, value from {$CONFIG->dbprefix}datalists where name in ('dataroot','simplecache_enabled')",$mysql_dblink)) {
-				$row = mysql_fetch_object($result);
+$mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true);
+$db = @mysql_select_db($CONFIG->dbname, $mysql_dblink);
 
-				while ($row) {
-					if ($row->name == 'dataroot') {
+$view = $viewinput['view'];
+$viewtype = mysql_real_escape_string($viewtype, $mysql_dblink);
+
+if ($db) {
+	// get dataroot and simplecache_enabled in one select for efficiency
+	$simplecache_enabled = true;
+	if (!isset($dataroot)) {
+		$result = mysql_query("select name, value from {$CONFIG->dbprefix}datalists where name in ('dataroot','simplecache_enabled')", $mysql_dblink);
+		if ($result) {
+			$row = mysql_fetch_object($result);
+
+			while ($row) {
+				switch ($row->name) {
+					case 'dataroot':
 						$dataroot = $row->value;
-					} else if ($row->name == 'simplecache_enabled') {
+						break;
+
+					case 'simplecache_enabled':
 						$simplecache_enabled = $row->value;
-					}
-					$row = mysql_fetch_object($result);
+						break;
 				}
+
+				$row = mysql_fetch_object($result);
 			}
 		}
+	}
 
-		if ($simplecache_enabled || $override) {
+	if ($simplecache_enabled && !$override) {
+		// check against valid view type cache
+		$view_types_file = $dataroot . 'view_types';
+		$valid_view_type = false;
+
+		if ($viewtype == 'default') {
+			$valid_view_type = true;
+		} elseif (file_exists($view_types_file)) {
+			$cached_view_types = file_get_contents($view_types_file);
+			$valid_view_types = unserialize($cached_view_types);
+			$valid_view_type = in_array($viewtype, $valid_view_types);
+		}
+
+		if ($valid_view_type) {
 			$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
 			if (file_exists($filename)) {
 				$contents = file_get_contents($filename);
-				header("Content-Length: " . strlen($contents));
 			} else {
-				mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate', value = '0' ON DUPLICATE KEY UPDATE value='0'");
-
-				echo ''; exit;
+				mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate_$viewtype', value = '0' ON DUPLICATE KEY UPDATE value='0'", $mysql_dblink);
 			}
-		} else {
-			mysql_close($mysql_dblink);
-			require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-			$contents = elgg_view($view);
-			header("Content-Length: " . strlen($contents));
 		}
 	}
 }
+
+// load full engine if simplecache is disabled, overriden, or invalid
+if (!$contents) {
+	mysql_close($mysql_dblink);
+	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+	$contents = elgg_view($view);
+}
+
+header("Content-Length: " . strlen($contents));
 
 $split_output = str_split($contents, 1024);
 

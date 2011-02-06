@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 $widgettypes = get_widget_types();
 
@@ -51,8 +49,8 @@ if ($owner && $owner->canEdit()) {
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14px" height="14px" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15px" height="15px" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -116,8 +114,8 @@ if ($owner && $owner->canEdit()) {
 			</h3>
 		</td>
 		<td width="17px" align="right"></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14px" height="14px" class="more_info" /></a></td>
-		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15px" height="15px" class="drag_handle" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 		</tr></table>
 
 		<?php
@@ -161,8 +159,8 @@ if ($owner && $owner->canEdit()) {
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14px" height="14px" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15px" height="15px" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -202,8 +200,8 @@ if ($owner && $owner->canEdit()) {
 	</h3>
 </td>
 <td width="17px" align="right"></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14px" height="14px" class="more_info" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15px" height="15px" class="drag_handle" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="14" height="14" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" width="15" height="15" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
@@ -226,9 +224,9 @@ if ($owner && $owner->canEdit()) {
 </div><!-- /#customise_page_view -->
 
 <form action="<?php echo $vars['url']; ?>action/widgets/reorder" method="post">
-<textarea type="textarea" value="Left widgets"   style="display:none" name="debugField1" id="debugField1" /><?php echo $leftcolumn_widgets; ?></textarea>
-<textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $middlecolumn_widgets; ?></textarea>
-<textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $rightcolumn_widgets; ?></textarea>
+<textarea style="display:none" name="debugField1" id="debugField1"><?php echo $leftcolumn_widgets; ?></textarea>
+<textarea style="display:none" name="debugField2" id="debugField2"><?php echo $middlecolumn_widgets; ?></textarea>
+<textarea style="display:none" name="debugField3" id="debugField3"><?php echo $rightcolumn_widgets; ?></textarea>
 
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
@@ -257,11 +255,15 @@ $token = generate_action_token($ts);
 <tr>
 	<td colspan="2" align="left" valign="top" height="1px">
 		<!-- profile box or 'dashboard info' notice -->
-		<?php if (isset($vars['area1'])) echo $vars['area1']; ?>
+<?php 
+		if (isset($vars['area1'])) {
+			echo $vars['area1'];
+		}
+?>
 	</td>
 	<td rowspan="2" align="left" valign="top" height="100%">
 		<?php
-		if($_SESSION['user']->guid == page_owner()){
+		if (get_loggedin_userid() == page_owner()) {
 		?>
 		<!-- customise page button -->
 		<a href="javascript:void(0);" class="toggle_customise_edit_panel"><?php echo(elgg_echo('dashboard:configure')); ?></a>

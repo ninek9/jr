@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['entities'] The array of ElggUser objects
  */
@@ -79,8 +77,16 @@ if (is_array($vars['entities']) && sizeof($vars['entities'])) {
 		if (!isset($users[$letter])) {
 			$users[$letter] = array();
 		}
-		$users[$letter][$user->name] = $user;
+		$users[$letter][$user->guid] = $user;
 	}
+}
+
+// sort users in letters alphabetically
+foreach ($users as $letter => $letter_users) {
+	usort($letter_users, create_function('$a, $b', '
+		return strcasecmp($a->name, $b->name);
+	'));
+	$users[$letter] = $letter_users;
 }
 
 if (!$callback) {

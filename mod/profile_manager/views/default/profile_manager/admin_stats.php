@@ -10,13 +10,13 @@
 	* @link http://www.coldtrick.com/
 	*/
 
-	$total_users = get_entities("user", "", null, null, null, null, true);
+	$total_users = elgg_get_entities("user", "", null, null, null, null, true);
 
-	$profile_types_count = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
-	$profile_entities = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, $profile_types_count);
+	$profile_types_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
+	$profile_entities = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, $profile_types_count);
 	$profile_listing = "";
 	foreach($profile_entities as $profile_type){
-		$count = get_entities_from_metadata("custom_profile_type", $profile_type->guid, "user", "", null, null, null, null, null, true);
+		$count = elgg_get_entities_from_metadata("custom_profile_type", $profile_type->guid, "user", "", null, null, null, null, null, true);
 		$profile_listing .= "<b>" . $profile_type->metadata_name . "</b>: " . $count . "<br />";
 	}
 

@@ -1,11 +1,9 @@
 <?php
 /**
- * Activity viewer
+ * Core language file
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $english = array(
@@ -30,6 +28,8 @@ $english = array(
 
 	'loggedinrequired' => "You must be logged in to view that page.",
 	'adminrequired' => "You must be an administrator to view that page.",
+	'membershiprequired' => "You must be a member of this group to view that page.",
+
 
 /**
  * Errors
@@ -40,6 +40,7 @@ $english = array(
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
+	'actionunauthorized' => 'You are unauthorized to perform this action',
 
 	'SecurityException:Codeblock' => "Denied access to execute privileged code block",
 	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials.",
@@ -54,7 +55,7 @@ $english = array(
 
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
-	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin. It has been disabled. Please see the Elgg wiki for possible causes.",
+	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 
@@ -91,10 +92,10 @@ $english = array(
 	'ImportException:NotAllImported' => "Not all elements were imported.",
 
 	'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
-	'InvalidParameterException:MissingOwner' => "File %s (%d) is missing an owner!",
+	'InvalidParameterException:MissingOwner' => "File %s (file guid:%d) (owner guid:%d) is missing an owner!",
 	'IOException:CouldNotMake' => "Could not make %s",
 	'IOException:MissingFileName' => "You must specify a name before opening a file.",
-	'ClassNotFoundException:NotFoundNotSavedWithFile' => "Filestore not found or class not saved with file!",
+	'ClassNotFoundException:NotFoundNotSavedWithFile' => "Unable to load filestore class %s for file %u",
 	'NotificationException:NoNotificationMethod' => "No notification method specified.",
 	'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
 	'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
@@ -176,6 +177,9 @@ $english = array(
 
 	'SecurityException:deletedisablecurrentsite' => 'You can not delete or disable the site you are currently viewing!',
 
+	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
+	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+
 	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
 	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
 	'memcache:versiontoolow' => 'Memcache needs at least version %s to run, you are running %s',
@@ -184,6 +188,7 @@ $english = array(
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
+	'changebookmark' => 'Please change your bookmark for this page',
 /**
  * API
  */
@@ -281,10 +286,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'friends:of:owned' => "People who have made %s a friend",
 
-	'friends:num_display' => "Number of friends to display",
-	'friends:icon_size' => "Icon size",
-	'friends:tiny' => "tiny",
-	'friends:small' => "small",
 	'friends:of' => "Friends of",
 	'friends:collections' => "Collections of friends",
 	'friends:collections:add' => "New friends collection",
@@ -300,9 +301,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:created' => "%s added the friends widget.",
-	'friends:river:updated' => "%s updated their friends widget.",
-	'friends:river:delete' => "%s removed their friends widget.",
 	'friends:river:add' => "%s is now a friend with",
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -399,7 +397,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'registration:usernametooshort' => 'Your username must be a minimum of 4 characters long.',
 	'registration:passwordtooshort' => 'The password must be a minimum of 6 characters long.',
 	'registration:dupeemail' => 'This email address has already been registered.',
-	'registration:invalidchars' => 'Sorry, your username contains invalid characters.',
+	'registration:invalidchars' => 'Sorry, your username contains the following invalid character: %s.  All of these characters are invalid: %s',
 	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
 	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
 	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
@@ -416,12 +414,14 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
 
 	'user:set:password' => "Account password",
+	'user:current_password:label' => 'Current password',
 	'user:password:label' => "Your new password",
 	'user:password2:label' => "Your new password again",
 	'user:password:success' => "Password changed",
 	'user:password:fail' => "Could not change your password on the system.",
 	'user:password:fail:notsame' => "The two passwords are not the same!",
 	'user:password:fail:tooshort' => "Password is too short!",
+	'user:password:fail:incorrect_current_password' => 'The current password entered is incorrect.',
 	'user:resetpassword:unknown_user' => 'Invalid user.',
 	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
 
@@ -436,7 +436,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:password:resetreq:success' => 'Successfully requested a new password, email sent',
 	'user:password:resetreq:fail' => 'Could not request a new password.',
 
-	'user:password:text' => 'To generate a new password, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you.',
+	'user:password:text' => 'To generate a new password, enter your username below. We will send the address of a unique verification page to you via email.  Click on the link in the body of the message and a new password will be sent to you.',
 
 	'user:persistent' => 'Remember me',
 /**
@@ -501,7 +501,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:user:unban:no' => "Can not unban user",
 	'admin:user:unban:yes' => "User un-banned.",
 	'admin:user:delete:no' => "Can not delete user",
-	'admin:user:delete:yes' => "User deleted",
+	'admin:user:delete:yes' => "The user %s has been deleted",
 
 	'admin:user:resetpassword:yes' => "Password reset, user notified.",
 	'admin:user:resetpassword:no' => "Password could not be reset.",
@@ -710,6 +710,8 @@ Creating this is easy. Copy the contents of the textbox below into a text editor
 
 Alternatively, you can enter your database settings below and we will try and do this for you...",
 
+	'installation:error:db:title' => "Database settings error",
+	'installation:error:db:text' => "Check your database settings again as Elgg could not connect and access the database.",
 	'installation:error:configuration' => "Once you've corrected any configuration issues, press reload to try again.",
 
 	'installation' => "Installation",

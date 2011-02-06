@@ -55,7 +55,7 @@
 		<div id="elgg_topbar_container_right">			
 			<?php
 				// The administration link is for admin or site admin users only
-				if ($vars['user']->admin || $vars['user']->siteadmin) { 
+				if ($vars['user']->isAdmin()) { 
 			?>
 				<a href="<?php echo $vars['url']; ?>pg/admin/" class="usersettings<?php if (get_context() == 'admin') echo ' current'; ?>"><?php echo elgg_echo("admin"); ?></a>
 			<?php } ?>

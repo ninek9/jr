@@ -10,10 +10,10 @@
 	* @link http://www.coldtrick.com/
 	*/
  
-	$categories_count = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
+	$categories_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, null, null, true);
 	
 	if($categories_count > 0){
-		$categories = get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, $categories_count);
+		$categories = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_CATEGORY_SUBTYPE, null, null, $categories_count);
 		
 		$ordered = array();
 		foreach($categories as $cat){

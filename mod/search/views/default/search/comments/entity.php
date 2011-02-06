@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 $entity = $vars['entity'];
 
@@ -44,14 +42,14 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 
 $description = $entity->getVolatileData('search_matched_comment');
 $tc = $entity->getVolatileData('search_matched_comment_time_created');;
-$time = friendly_time($tc);
+$time = elgg_view_friendly_time($tc);
 
 echo <<<___END
 	<div class="search_listing">
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
-			<p class="ItemTitle">$title</p>$description
-			<p class="ItemTimestamp">$time</p>
+			<p class="item_title">$title</p>$description
+			<p class="item_timestamp">$time</p>
 		</div>
 	</div>
 ___END;

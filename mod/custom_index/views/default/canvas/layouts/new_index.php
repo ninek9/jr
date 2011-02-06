@@ -6,26 +6,19 @@
 	 * will replace the frontpage of your Elgg site.
 	 * 
 	 * @package Elgg
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008
-	 * @link http://elgg.org/
-	 *
-	 * JOCK ROSTER Custom Index
-	 * author: eric zanol
 	 */
 	 
 ?>
 
 <div id="custom_index">
-		<?php
-			//this displays some content when the user is logged out
-			if (!isloggedin()){
-				//display the login form
-				echo $vars['area1'];
-				echo "<div class=\"clearfloat\"></div>";
-			}
-		?>
+	        <?php
+	            //this displays some content when the user is logged out
+			    if (!isloggedin()){
+	            	//display the login form
+			    	echo $vars['area1'];
+			    	echo "<div class=\"clearfloat\"></div>";
+		        }
+	        ?>
     <!-- left column content -->
     <div id="index_left">	
 		<img src="<?php echo $vars['url']; ?>_graphics/jr/home_mainphoto_1.png" alt="You can do it!" title="You can do it!" />
@@ -48,8 +41,8 @@
 			<li><a title="As an athlete you represent your alma mater, which is as important as representing yourself. Build your school's reputation and stake a claim for your hometown.">Represent</a> your school and hometown</li>
 			<li>Build a <a title="Where would any athlete or team be without its fans? Luckily, you can bring in the cavalry to support you and team.">fan</a> base.</li>
 		</ul>
-    </div>
-	
+        </div>
+
 	<!-- registration form -->
 	<?php echo elgg_view("account/forms/register"); ?>
 </div>

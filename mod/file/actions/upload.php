@@ -3,9 +3,6 @@
 	 * Elgg file browser uploader/edit action
 	 * 
 	 * @package ElggFile
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	global $CONFIG;
@@ -87,9 +84,9 @@
 
 			// use same filename on the disk - ensures thumbnails are overwritten
 			$filestorename = $file->getFilename();
-			$filestorename = substr($filestorename, strlen($prefix));
+			$filestorename = elgg_substr($filestorename, elgg_strlen($prefix));
 		} else {
-			$filestorename = strtolower(time().$_FILES['upload']['name']);
+			$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 		}
 		
 		$file->setFilename($prefix.$filestorename);
@@ -139,6 +136,9 @@
 				unset($thumblarge);
 			}
 		}
+	} else {
+		// not saving a file but still need to save the entity to push attributes to database
+		$file->save();
 	}
 	
 	// make sure session cache is cleared
@@ -158,7 +158,7 @@
 		}
 	
 		$container_user = get_entity($container_guid);
-		forward($CONFIG->wwwroot . "pg/file/" . $container_user->username);
+		forward($CONFIG->wwwroot . "pg/file/owner/" . $container_user->username);
 	
 	} else {
 		if ($guid) {

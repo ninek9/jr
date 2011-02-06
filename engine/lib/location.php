@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
@@ -277,6 +275,6 @@ function list_entities_in_area($lat, $long, $radius, $type= "", $subtype = "", $
 define("MILE", 0.01515);
 define("KILOMETER", 0.00932);
 
-// TODO: get objects within x miles by entities, metadata and relationship
+// @todo get objects within x miles by entities, metadata and relationship
 
-// TODO: List
+// @todo List

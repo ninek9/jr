@@ -10,8 +10,8 @@
 	* @link http://www.coldtrick.com/
 	*/
  
-	$count = get_entities("object", "custom_profile_field", 0, "", null, null, true);
-    $fields = get_entities("object", "custom_profile_field", 0, "", $count, 0);
+	$count = elgg_get_entities("object", "custom_profile_field", 0, "", null, null, true);
+    $fields = elgg_get_entities("object", "custom_profile_field", 0, "", $count, 0);
 	
 	$ordered = array();
 	if($count > 0){	

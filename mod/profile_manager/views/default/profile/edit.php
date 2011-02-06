@@ -41,10 +41,10 @@
 		// can user edit? or just admins
 		if($setting == "user" || isadminloggedin()){
 			// get profile types
-			$types_count = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
+			$types_count = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, null, null, true);
 			
 			if($types_count > 0){
-				$types = get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, $types_count);
+				$types = elgg_get_entities("object", CUSTOM_PROFILE_FIELDS_PROFILE_TYPE_SUBTYPE, null, null, $types_count);
 				
 				$options = array();
 				$options[""] = elgg_echo("profile_manager:profile:edit:custom_profile_type:default");

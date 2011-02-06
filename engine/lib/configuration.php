@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
@@ -19,7 +17,7 @@
 function unset_config($name, $site_guid = 0) {
 	global $CONFIG;
 
-	$name = mysql_real_escape_string($name);
+	$name = sanitise_string($name);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
@@ -39,11 +37,19 @@ function unset_config($name, $site_guid = 0) {
 function set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
 
-	// Unset existing
-	unset_config($name,$site_guid);
+	$name = trim($name);
 
-	$name = mysql_real_escape_string($name);
-	$value = mysql_real_escape_string($value);
+	// cannot store anything longer than 32 characters in db, so catch before we set
+	if (elgg_strlen($name) > 32) {
+		elgg_log("The name length for configuration variables cannot be greater than 32", "ERROR");
+		return false;
+	}
+
+	// Unset existing
+	unset_config($name, $site_guid);
+
+	$name = sanitise_string($name);
+	$value = sanitise_string($value);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
@@ -58,8 +64,8 @@ function set_config($name, $value, $site_guid = 0) {
  * Gets a configuration value
  *
  * @param string $name The name of the config value
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
- * @return mixed|false Depending on success
+ * @param int $site_guid Optionally, the GUID of the site (current site is the default)
+ * @return mixed|null Depending on success
  */
 function get_config($name, $site_guid = 0) {
 	global $CONFIG;
@@ -67,7 +73,7 @@ function get_config($name, $site_guid = 0) {
 	if (isset($CONFIG->$name)) {
 		return $CONFIG->$name;
 	}
-	$name = mysql_real_escape_string($name);
+	$name = sanitise_string($name);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
@@ -80,7 +86,7 @@ function get_config($name, $site_guid = 0) {
 		return $result;
 	}
 
-	return false;
+	return null;
 }
 
 /**

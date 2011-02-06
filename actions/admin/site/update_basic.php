@@ -7,8 +7,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 global $CONFIG;
@@ -26,7 +24,7 @@ if (get_input('settings') == 'go') {
 		$site->description = get_input('sitedescription');
 		$site->name = get_input('sitename');
 		$site->email = get_input('siteemail');
-		$site->url = get_input('wwwroot');
+		$site->url = sanitise_filepath(get_input('wwwroot'));
 
 		datalist_set('path',sanitise_filepath(get_input('path')));
 		datalist_set('dataroot',sanitise_filepath(get_input('dataroot')));

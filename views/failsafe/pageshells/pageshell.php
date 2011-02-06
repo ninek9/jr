@@ -6,8 +6,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['config'] The site configuration settings, imported
  * @uses $vars['title'] The page title
@@ -18,6 +16,10 @@
 // we won't trust server configuration but specify utf-8
 header('Content-type: text/html; charset=utf-8');
 
+// do not want install pages cached
+header('Cache-Control: no-cache');
+header('Pragma: no-cache');
+header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
 ?>
 <html>
 	<head>

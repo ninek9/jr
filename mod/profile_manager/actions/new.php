@@ -74,7 +74,7 @@
 	} elseif(($metadata_type == "pulldown" || $metadata_type == "radio" || $metadata_type == "multiselect") && empty($metadata_options)){
 		register_error(elgg_echo("profile_manager:actions:new:error:metadata_options"));
 	} else {		 
-		$existing = get_entities_from_metadata("metadata_name", $metadata_name, "object", "custom_" . $type . "_field", $CONFIG->site_guid, null,null,null,null,true);
+		$existing = elgg_get_entities_from_metadata("metadata_name", $metadata_name, "object", "custom_" . $type . "_field", $CONFIG->site_guid, null,null,null,null,true);
 		if(empty($current_field) && $existing > 0){
 			register_error(elgg_echo("profile_manager:actions:new:error:metadata_name_invalid"));
 		} else {
@@ -96,7 +96,7 @@
 			}
 			
 			if(!$options_error){
-				$max_fields = get_entities("object", "custom_" . $type . "_field", $CONFIG->site_guid, null, null, null, true) + 1;
+				$max_fields = elgg_get_entities("object", "custom_" . $type . "_field", $CONFIG->site_guid, null, null, null, true) + 1;
 
 				if($current_field){
 					$field = $current_field;

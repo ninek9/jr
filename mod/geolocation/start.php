@@ -202,8 +202,8 @@
 		   		
 				if ($first_time_geo && $object instanceof ElggUser) {
 					//If this is the first time the user is geopositioned we try to establish the geoposition for all his element 
-					$count_entities = get_entities('', '', $user->guid, '', '', '', true);
-					$entities = get_entities('', '', $user->guid, '', $count_entities);
+					$count_entities = elgg_get_entities('', '', $user->guid, '', '', '', true);
+					$entities = elgg_get_entities('', '', $user->guid, '', $count_entities);
 					
 					foreach ($entities as $entity) {
 						if ($entity instanceof Locatable && !in_array($entity->getSubtype(),geolocation_blacklist_objects())) {

@@ -61,9 +61,9 @@
 		$twelve_hours = 60*60*12;
 		set_context('fbconnect');
 		// get the Facebook users
-		$user_count = get_entities('user','facebook',0,'',10,0,true);
+		$user_count = elgg_get_entities('user','facebook',0,'',10,0,true);
 		if ($user_count) {
-			$users = get_entities('user','facebook',0,'',$user_count,0,false);
+			$users = elgg_get_entities('user','facebook',0,'',$user_count,0,false);
 			foreach ($users as $user) {
 				// sync the user data with Facebook if the data is older than
 				// tweleve hours

@@ -4,10 +4,6 @@
 	 * Elgg External pages edit
 	 * 
 	 * @package ElggExpages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 */
 	 
@@ -23,21 +19,17 @@
 	if($page_contents){
 		 foreach($page_contents as $pc){
 			 $description = $pc->description;
-			 $tags = $pc->tags;
 			 $guid = $pc->guid;
 		 }
 	}else {		
-		$tags = "";
 		$description = "";
 	}
 		
 	// set the required form variables
 		$input_area = elgg_view('input/longtext', array('internalname' => 'expagescontent', 'value' => $description));
-		$tag_input = elgg_view('input/tags', array('internalname' => 'expagestags', 'value' => $tags));
         $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 		$hidden_value = elgg_view('input/hidden', array('internalname' => 'content_type', 'value' => $type));
 		$hidden_guid = elgg_view('input/hidden', array('internalname' => 'expage_guid', 'value' => $guid));
-		$tag_label = elgg_echo('tags') . "<br/>";  
 		
 		//type
 		$type = $vars['type'];
@@ -61,10 +53,6 @@
 
 		<h3 class='settings'>$external_page_title</h3>
 		<p class='longtext_editarea'>$input_area</p>
-		<p>
-			$tag_label
-			$tag_input
-		</p>
 			$hidden_value
 			$hidden_guid
 			<br />
@@ -83,10 +71,12 @@ EOT;
 <a name="preview"></a>
 <h2>Preview</h2>
 <?php 
+/*
 	if($description)
 		echo $description;
 	else
 		echo elgg_echo('expages:nopreview');
+*/
 ?>
 </div>
 -->

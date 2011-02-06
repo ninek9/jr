@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 if ($vars['full']) {
@@ -50,7 +48,7 @@ if ($vars['full']) {
 	}
 
 	$info .= "<div>".sprintf(elgg_echo("entity:default:strapline"),
-		friendly_time($vars['entity']->time_created),
+		elgg_view_friendly_time($vars['entity']->time_created),
 		$ownertxt
 	);
 

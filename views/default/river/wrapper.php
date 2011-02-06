@@ -4,8 +4,6 @@
  * Wraps all river items.
  *
  * @package Elgg
- * @author Curverider
- * @link http://elgg.com/
  */
 
 $statement = $vars['statement'];
@@ -37,7 +35,7 @@ if ($statement->getObject() instanceof ElggEntity) {
 				<span class="river_item_time">
 					(<?php
 
-						echo friendly_time($time);
+						echo elgg_view_friendly_time($time);
 
 					?>)
 				</span>

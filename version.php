@@ -7,12 +7,11 @@
  *
  * @package Elgg
  * @subpackage Core
- * @link http://elgg.org/
  */
 
 // YYYYMMDD = Elgg Date
 // XX = Interim incrementer
-$version = 2010030101;
+$version = 2010071002;
 
 // Human-friendly version name
-$release = '1.7';
+$release = '1.7.7';

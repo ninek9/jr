@@ -4,12 +4,10 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $admin_option = false;
-if (($_SESSION['user']->admin) && ($vars['show_admin'])) {
+if ((get_loggedin_user()->isAdmin()) && ($vars['show_admin'])) {
 	$admin_option = true;
 }
 

@@ -5,8 +5,6 @@
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
-	 * @author Curverider Ltd
-	 * @link http://elgg.org/
 	 */
 
 	/**
@@ -110,7 +108,7 @@
 		}
 		
 		if ($n==0) {
-			$output = "</array>\n";
+			$output .= "</array>\n";
 		}
 		
 		return $output;
