@@ -20,7 +20,7 @@ if (($_SESSION['user']->admin) && ($vars['show_admin'])) {
 		$admin_option = true;
 }
 
-$form_body = "<p><label>" . elgg_echo('name') . "</label>" . elgg_view('input/text' , array('internalname' => 'regname', 'class' => "general-textarea", 'value' => $name, 'autocomplete' => 'off')) . "<br />";	
+$form_body = "<p class=\"testing\"><label>" . elgg_echo('name') . "</label>" . elgg_view('input/text' , array('internalname' => 'regname', 'class' => "general-textarea", 'value' => $name, 'autocomplete' => 'off')) . "<br />";	
 $form_body .= "<label>" . elgg_echo('email') . "</label>" . elgg_view('input/text' , array('internalname' => 'regemail', 'class' => "general-textarea", 'value' => $email, 'autocomplete' => 'off')) . "<br />";
 $form_body .= "<label>" . elgg_echo('username') . "</label>" . elgg_view('input/text' , array('internalname' => 'regusername', 'class' => "general-textarea", 'value' => $username, 'autocomplete' => 'off')) . "<br />";
 $form_body .= "<label>" . elgg_echo('password') . "</label>" . elgg_view('input/password' , array('internalname' => 'regpassword', 'class' => "general-textarea", 'autocomplete' => 'off')) . "<br />";
