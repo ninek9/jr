@@ -1,14 +1,13 @@
 <?php
 
      /**
-	 * Elgg register form
+	 * JockRoster Theme register form
 	 * 
-	 * @package Elgg
-	 * @subpackage Core
+	 * @package JockRoster Theme
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2009
-	 * @link http://elgg.org/
+	 * @author Eric Zanol
+	 * @copyright JockRoster 2009-2011
+	 * @link http://jockroster.com
 	 */
 	 
 	$username = get_input('u');
