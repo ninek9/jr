@@ -567,11 +567,11 @@ div.login-inputs label {
 }
 
 #custom_index #register-box p {
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 }
 
 #custom_index #register-box label {
-	width: 73px;
+	width: 85px;
 	margin-bottom: 0;
 	margin-right: 5px;
 	font-weight: bold;
@@ -603,8 +603,8 @@ div.login-inputs label {
 	background-repeat: no-repeat;
 	border: 0;
 	position: absolute;
-	top: 183px;
-	left: 171px;
+	top: 187px;
+	left: 187px;
 	margin: 0;
 	padding: 0;
 }
