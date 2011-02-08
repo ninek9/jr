@@ -4,10 +4,6 @@
 	 * Elgg messages individual view
 	 * 
 	 * @package ElggMessages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 *
 	 * 
 	 * @uses $vars['entity'] Optionally, the message to view
@@ -18,7 +14,7 @@
 	if(get_input("type") == "sent"){
     	
         // send back to the users sentbox
-        $url = $vars['url'] . "mod/messages/sent.php";
+		$url = $vars['url'] . "pg/messages/sent/";
         
         //this is used on the delete link so we know which type of message it is 
         $type = "sent";
@@ -26,7 +22,7 @@
     } else {
         
         //send back to the users inbox
-        $url = $vars['url'] . "pg/messages/" . $vars['user']->username;
+		$url = $vars['url'] . "pg/messages/inbox/" . $vars['user']->username;
         
         //this is used on the delete link so we know which type of message it is 
         $type = "inbox";
@@ -69,7 +65,7 @@
                 }
             ?>
             <!-- get the time the message was sent -->
-            <small><?php echo friendly_time($vars['entity']->time_created); ?></small>
+			<small><?php echo elgg_view_friendly_time($vars['entity']->time_created); ?></small>
             </p>
         </div><!-- end of the message_user_icon div -->
         
@@ -129,7 +125,7 @@
 		<div id="message_reply_form">
 			<form action="<?php echo $vars['url']; ?>action/messages/send" method="post" name="messageForm">
 				<!-- populate the title space with the orginal message title, inserting re: before it -->						        
-				<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value="<?php echo htmlentities($reply_title); ?>" /></label></p>
+				<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input-text" value="<?php echo htmlentities($reply_title, ENT_QUOTES, 'UTF-8'); ?>" /></label></p>
 				<p class="longtext_editarea"><label><?php echo elgg_echo("messages:message"); ?>:</label></p>
 				<div id="message_reply_editor">
 				<?php

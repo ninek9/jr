@@ -72,6 +72,4 @@ You cannot reply to this email.",
 	
 	);
 					
-	add_translation("en",$english);
-
-?>
+add_translation("en",$english);

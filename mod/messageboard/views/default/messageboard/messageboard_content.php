@@ -1,13 +1,9 @@
 <?php
 
      /**
-	 * Elgg Message board individual item display page
+ * Elgg Message board individual item display view
 	 * 
 	 * @package ElggMessageBoard
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 	 
 ?>
@@ -23,7 +19,7 @@
     
     <!-- display the user's name who posted and the date/time -->
     <p class="message_item_timestamp">
-        <?php echo get_entity($vars['annotation']->owner_guid)->name . " " . friendly_time($vars['annotation']->time_created); ?>
+		<?php echo get_entity($vars['annotation']->owner_guid)->name . " " . elgg_view_friendly_time($vars['annotation']->time_created); ?>
     </p>
     		
 	<!-- output the actual comment -->

@@ -3,10 +3,6 @@
 	 * Elgg Pages
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	// Output body
@@ -72,7 +68,7 @@
 			$owner = get_entity($owner_guid);
 		
 			echo sprintf(elgg_echo("pages:strapline"),
-							friendly_time($time_updated),
+							elgg_view_friendly_time($time_updated),
 							"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 			);
 		

@@ -4,10 +4,6 @@
 	 * Elgg Pages welcome message
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 	 
 	 if($vars['entity']){
@@ -22,7 +18,7 @@
 
 ?>
 
-<div class="contentWrapper pageswelcome"><p><?php elgg_echo('pages:welcomemessage'); ?></p></div>
+<div class="contentWrapper pageswelcome"><p><?php echo sprintf(elgg_echo('pages:welcomemessage'), $vars['config']->sitename); ?></p></div>
     
 <?php
     }

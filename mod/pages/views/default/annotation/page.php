@@ -3,10 +3,6 @@
 	 * Elgg Pages
 	 * 
 	 * @package ElggPages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 	$annotation = $vars['annotation'];
@@ -23,7 +19,7 @@
 	$owner = get_entity($owner_guid);
 			
 	$rev = sprintf(elgg_echo('pages:revision'), 
-		friendly_time($annotation->time_created),
+		elgg_view_friendly_time($annotation->time_created),
 		
 		"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 	);
