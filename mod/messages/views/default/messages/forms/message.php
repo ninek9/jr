@@ -29,6 +29,7 @@
 	 
 ?>
 	<div class="contentWrapper">
+	<div id="messages"> <?php //wrap the message bits in a more easily accessible to css wrapper --> ?>
 	<form action="<?php echo $vars['url']; ?>action/messages/send" method="post" name="messageForm">
 			
 	    <?php
@@ -42,7 +43,7 @@
     	        $user = get_user($send_to);
     	        
     	        //draw it
-    			echo "<div class=\"messages_to\"><label>" . elgg_echo("messages:to") . ":</label></div><div class=\"messages_single_icon\">" . elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny')) . $user->username;
+    			echo "<label>" . elgg_echo("messages:to") . ":</label><div class=\"messages_single_icon\">" . elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny')) . $user->username;
     			echo "</div><br class=\"clearfloat\" />";
     			//set the hidden input field to the recipients guid
     	        echo "<input type=\"hidden\" name=\"send_to\" value=\"{$send_to}\" />";
@@ -84,7 +85,8 @@
 			
 		?>
 		</label></p>
-		<p><input type="submit" class="submit_button" value="<?php echo elgg_echo("messages:fly"); ?>" /></p>
+		<p><input type="submit" class="submit_button sendMessage" value="<?php echo elgg_echo("messages:fly"); ?>!" /></p>
 	
 	</form>
+	</div> <?php //end messages wrapper ?>
 	</div>

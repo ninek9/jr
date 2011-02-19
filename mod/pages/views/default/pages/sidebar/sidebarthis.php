@@ -70,7 +70,7 @@
 				 $children .= "\n\t\t{\n";
 				$children .= "\t\t\t\"text\": \"<a href=\\\"{$child->getURL()}\\\">{$child->title}</a>\",\n";
 				
-				$haschild = elgg_get_entities_from_metadata('parent_guid',$child->guid,'','',0,10,0,'',0,true);
+				$haschild = get_entities_from_metadata('parent_guid',$child->guid,'','',0,10,0,'',0,true);
 				if ($haschild) {
 					$children .= "\t\t\t\"id\": \"{$child->getGUID()}\",\n\t\t\t\"hasChildren\": true\n";
 				}				

@@ -15,8 +15,9 @@
 <?php
 	$i = 0; 
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-		if ($i > 0)
+	if ($i > 0) {
 			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+	}
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
@@ -45,7 +46,9 @@
 					$personalchecked[$method] = '';
 				}
 			}
-			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+	if ($i > 0) {
+		$fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+	}
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
 			    <a  border="0" id="{$method}personal" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}personal');">

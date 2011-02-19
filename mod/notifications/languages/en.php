@@ -26,4 +26,3 @@
 					
 	add_translation("en",$english);
 
-?>

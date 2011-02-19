@@ -12,9 +12,7 @@
 
 <?php
 
-	echo elgg_view(
-						'input/form',
-						array(
+	echo elgg_view('input/form', array(
 							'action' => $vars['url'] . 'action/categories/save',
 							'method' => 'post',
 							'body' => elgg_view('categories/settingsform',$vars)

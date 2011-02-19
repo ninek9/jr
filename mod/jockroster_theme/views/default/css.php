@@ -566,16 +566,20 @@ div.login-inputs label {
 	text-decoration: none;
 }
 
+#custom_index #register-box p {
+	margin-bottom: 2px;
+}
+
 #custom_index #register-box label {
-	width: 73px;
-	margin-bottom: 7px;
+	width: 85px;
+	margin-bottom: 0;
 	margin-right: 5px;
 	font-weight: bold;
 	text-align: right;
 	position: relative;
 	top: 7px;
-	font-weight: bold;
 	float: left;
+	font-size: 85%;
 }
 
 #custom_index #register-box input[type="text"],
@@ -590,10 +594,6 @@ div.login-inputs label {
 	-webkit-border-radius: 5px;
 }
 
-/*#custom_index #register-box input[type="password"] {
-	background: #fff87c;
-}*/
-
 #custom_index #register-box input[type="submit"] {
 	width: 54px;
 	height: 27px;
@@ -603,8 +603,8 @@ div.login-inputs label {
 	background-repeat: no-repeat;
 	border: 0;
 	position: absolute;
-	top: 183px;
-	left: 171px;
+	top: 187px;
+	left: 187px;
 	margin: 0;
 	padding: 0;
 }

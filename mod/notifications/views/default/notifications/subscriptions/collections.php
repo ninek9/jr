@@ -29,8 +29,9 @@
 	$i = 0; 
 	global $NOTIFICATION_HANDLERS;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-		if ($i > 0)
+		if ($i > 0) {
 			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+		}
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
@@ -42,9 +43,10 @@
 <?php
 		$members = array();
 		if ($friends = get_user_friends($vars['user']->guid,'',9999,0)) {
-			foreach($friends as $friend)
+		foreach($friends as $friend) {
 				$members[] = $friend->guid;
 		}
+	}
 		$memberno = sizeof($members);
 		$members = implode(',',$members);
 
@@ -62,16 +64,20 @@
 		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 			$metaname = 'collections_notifications_preferences_' . $method;
 			if ($collections_preferences = $vars['user']->$metaname) {
-				if (!empty($collections_preferences) && !is_array($collections_preferences))
+			if (!empty($collections_preferences) && !is_array($collections_preferences)) {
 					$collections_preferences = array($collections_preferences);
-				if (is_array($collections_preferences))
+			}
+			if (is_array($collections_preferences)) {
 				if (in_array(-1,$collections_preferences)) {
 					$collectionschecked[$method] = 'checked="checked"';
 				} else {
 					$collectionschecked[$method] = '';
 				}
 			}
-			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+		}
+		if ($i > 0) {
+			$fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+		}
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
 			    <a border="0" id="{$method}collections-1" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections-1'); setCollection([{$members}],'{$method}',-1);">
@@ -108,16 +114,20 @@ END;
 		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 			$metaname = 'collections_notifications_preferences_' . $method;
 			if ($collections_preferences = $vars['user']->$metaname) {
-				if (!empty($collections_preferences) && !is_array($collections_preferences))
+					if (!empty($collections_preferences) && !is_array($collections_preferences)) {
 					$collections_preferences = array($collections_preferences);
-				if (is_array($collections_preferences))
+					}
+					if (is_array($collections_preferences)) {
 				if (in_array($collection->id,$collections_preferences)) {
 					$collectionschecked[$method] = 'checked="checked"';
 				} else {
 					$collectionschecked[$method] = '';
 				}
 			}
-			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+				}
+				if ($i > 0) {
+					$fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+				}
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
 			    <a border="0" id="{$method}collections{$collection->id}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections{$collection->id}'); setCollection([{$members}],'{$method}',{$collection->id});">

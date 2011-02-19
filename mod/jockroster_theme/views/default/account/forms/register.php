@@ -1,14 +1,13 @@
 <?php
 
      /**
-	 * Elgg register form
+	 * JockRoster Theme register form
 	 * 
-	 * @package Elgg
-	 * @subpackage Core
+	 * @package JockRoster Theme
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2009
-	 * @link http://elgg.org/
+	 * @author Eric Zanol
+	 * @copyright JockRoster 2009-2011
+	 * @link http://jockroster.com
 	 */
 	 
 	$username = get_input('u');
@@ -20,11 +19,11 @@ if (($_SESSION['user']->admin) && ($vars['show_admin'])) {
 		$admin_option = true;
 }
 
-$form_body = "<p><label>" . elgg_echo('name') . "</label>" . elgg_view('input/text' , array('internalname' => 'regname', 'class' => "general-textarea", 'value' => $name, 'autocomplete' => 'off')) . "<br />";	
-$form_body .= "<label>" . elgg_echo('email') . "</label>" . elgg_view('input/text' , array('internalname' => 'regemail', 'class' => "general-textarea", 'value' => $email, 'autocomplete' => 'off')) . "<br />";
-$form_body .= "<label>" . elgg_echo('username') . "</label>" . elgg_view('input/text' , array('internalname' => 'regusername', 'class' => "general-textarea", 'value' => $username, 'autocomplete' => 'off')) . "<br />";
-$form_body .= "<label>" . elgg_echo('password') . "</label>" . elgg_view('input/password' , array('internalname' => 'regpassword', 'class' => "general-textarea", 'autocomplete' => 'off')) . "<br />";
-$form_body .= "<label>" . elgg_echo('passwordagain') . "</label>" . elgg_view('input/password' , array('internalname' => 'regpassword2', 'class' => "general-textarea", 'autocomplete' => 'off')) . "<br />";
+$form_body = "<p><label>" . elgg_echo('name') . "</label>" . elgg_view('input/text' , array('internalname' => 'regname', 'class' => "general-textarea", 'value' => $name, 'autocomplete' => 'off')) . "</p>";	
+$form_body .= "<p><label>" . elgg_echo('email') . "</label>" . elgg_view('input/text' , array('internalname' => 'regemail', 'class' => "general-textarea", 'value' => $email, 'autocomplete' => 'off')) . "</p>";
+$form_body .= "<p><label>" . elgg_echo('username') . "</label>" . elgg_view('input/text' , array('internalname' => 'regusername', 'class' => "general-textarea", 'value' => $username, 'autocomplete' => 'off')) . "</p>";
+$form_body .= "<p><label>" . elgg_echo('password') . "</label>" . elgg_view('input/password' , array('internalname' => 'regpassword', 'class' => "general-textarea", 'autocomplete' => 'off')) . "</p>";
+$form_body .= "<p><label>" . elgg_echo('passwordagain') . "</label>" . elgg_view('input/password' , array('internalname' => 'regpassword2', 'class' => "general-textarea", 'autocomplete' => 'off')) . "</p>";
 	
 // view to extend to add more fields to the registration form
 $form_body .= elgg_view('register/extend');

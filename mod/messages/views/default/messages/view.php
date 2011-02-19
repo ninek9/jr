@@ -4,10 +4,6 @@
 	 * Elgg messages view page
 	 * 
 	 * @package ElggMessages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 * @uses $vars['entity'] An array of messages to view
 	 * @uses $vars['page_view'] This is the page the messages are being accessed from; inbox or sentbox
@@ -37,24 +33,26 @@
 					
 					//make sure to only display the messages that have not been 'deleted' (1 = deleted)
 					if($message->hiddenFrom != 1){
+
 						// check to see if the message has been read, if so, get the correct background color
 						if($message->readYet == 1){
 					echo "<div class=\"message_read\" />";
 				} else {
 				    echo "<div class=\"message_notread\" />";
 				}
+
 				//set the table
 				echo "<table width=\"100%\" cellspacing='0'><tr>";       
 						//get the icon of the user who owns the message
 				$from = get_entity($message->fromId);
-        		echo "<td width=\"150px\">" . elgg_view("profile/icon",array('entity' => $from, 'size' => 'tiny')) . "<div class='msgsender'><strong>" . $from->name . "</strong><br /><small>" . friendly_time($message->time_created) . "</small></div></td>";
-    				
+						echo "<td width=\"150px\">" . elgg_view("profile/icon",array('entity' => $from, 'size' => 'tiny')) . "<div class='msgsender'><strong>" . $from->name . "</strong><br /><small>" . elgg_view_friendly_time($message->time_created) . "</small></div></td>";
 				//display the message title
 				echo "<td width=\"300px\"><div class='msgsubject'>";
+						echo "<input type=\"checkbox\" name=\"message_id[]\" value=\"{$message->guid}\" /> ";
 				echo "<a href=\"{$message->getURL()}\">" . $message->title . "</a></div></td>";
+						//display the link to 'delete'
 				    
-				//display the link to 'delete'
-				echo "<td width=\"35px\">";
+						echo "<td width='35px'>";
 				echo "<div class='delete_msg'>" . elgg_view("output/confirmlink", array(
 					'href' => $vars['url'] . "action/messages/delete?message_id=" . $message->getGUID() . "&type=inbox&submit=" . urlencode(elgg_echo('delete')),
 					'text' => elgg_echo('delete'),
@@ -89,16 +87,15 @@
         				echo "<div class=\"message_sent\" />";
         				echo "<table width=\"100%\" cellspacing='0'><tr>";
 						
+						//get the icon for the user the message was sent to
+						echo "<tr><td width='200px'>" . elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny')) . "<div class='msgsender'><b>" . $user->name . "</b><br /><small>" . elgg_view_friendly_time($message->time_created) . "</small></div></td>";
         				//display the message title
-    				    echo "<td width=\"300px\"><div class='msgsubject'>";
+						echo "<td width='300px'><div class='msgsubject'>";
     				    echo "<input type=\"checkbox\" name=\"message_id[]\" value=\"{$message->guid}\" /> ";
     				    echo "<a href=\"{$message->getURL()}?type=sent\">" . $message->title . "</a></div></td>";
-        				
-        				//get the icon for the user the message was sent to
-        				echo "<td>" . elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny')) . "<div class='msgsender'><strong>" . $user->name . "</strong><br /><small>" . friendly_time($message->time_created) . "</small></div></td>";
-        				
 						//display the link to 'delete'
-        				echo "<td width=\"35px\">";
+        				
+						echo "<td width='35px'>";
 							echo "<div class='delete_msg'>" . elgg_view("output/confirmlink", array(
 							'href' => $vars['url'] . "action/messages/delete?message_id=" . $message->getGUID() . "&type=sent&submit=" . urlencode(elgg_echo('delete')),
 							'text' => elgg_echo('delete'),
@@ -129,7 +126,7 @@
 				$newoffset = $offset - $limit;
 				if ($newoffset < 0) $newoffset = 0;
 
-				$nexturl = elgg_http_add_url_query_elements($baseurl, array('offset' => $newoffset));
+				$prevurl = elgg_http_add_url_query_elements($baseurl, array('offset' => $newoffset));
 				
 				$nav .= '<a class="pagination_next" href="'.$prevurl.'">' . elgg_echo('next') . ' &raquo;</a> ';
 			}

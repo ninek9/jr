@@ -1,17 +1,16 @@
 <?php
 	/**
-	 * Elgg add user form. 
+	 * JockRoster Theme add user form. 
 	 * 
-	 * @package Elgg
-	 * @subpackage Core
+	 * @package JockRoster Theme
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2009
-	 * @link http://elgg.org/
+	 * @author Eric Zanol
+	 * @copyright JockRoster 2009-2011
+	 * @link http://jockroster.com
 	 */
 
 	$admin_option = false;
-if (($_SESSION['user']->admin) && ($vars['show_admin'])) {
+if (($_SESSION['user']->isAdmin())) && ($vars['show_admin'])) {
 		$admin_option = true;
 }
 		

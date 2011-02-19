@@ -17,9 +17,9 @@ function members_init() {
 	register_page_handler('members', 'members_page_handler');
 	
 	// Set up menu for logged in users
-	if (isloggedin()) {
+	/*if (isloggedin()) {
 		add_menu(elgg_echo('members:members'), $CONFIG->wwwroot . "pg/members/all/");
-	}
+	}*/
 	
 }
 

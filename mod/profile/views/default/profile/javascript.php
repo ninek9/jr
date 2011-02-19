@@ -4,10 +4,6 @@
 	 * Elgg profile image Javascript
 	 * 
 	 * @package ElggProfile
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 * 
 	 * @uses $vars['entity'] The user entity
 	 */
@@ -20,10 +16,13 @@
 
 var submenuLayer = 1000;
 
-function setup_avatar_menu() {
+function setup_avatar_menu(parent) {
+	if (!parent) {
+		parent = document;
+	}
 
 	// avatar image menu link
-	$("div.usericon img").mouseover(function() {
+	$(parent).find("div.usericon img").mouseover(function() {
 		// find nested avatar_menu_button and show
 		$(this.parentNode.parentNode).children(".avatar_menu_button").show();
 		$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow");
@@ -132,6 +131,7 @@ function setup_avatar_menu() {
 }
 
 $(document).ready(function() {
+
 	setup_avatar_menu();
 	
 	$("#ratingComments").hide();

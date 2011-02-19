@@ -31,25 +31,21 @@
 	right: 0;
 	bottom: 0;
 }
-
 .avatar_menu_arrow {
 	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrows.gif) no-repeat left top;
 	width:15px;
 	height:15px;
 }
-
 .avatar_menu_arrow_on {
 	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrows.gif) no-repeat left -16px;
 	width:15px;
 	height:15px;
 }
-
 .avatar_menu_arrow_hover {
 	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrows.gif) no-repeat left -32px;
 	width:15px;
 	height:15px;
 }
-
 .usericon div.sub_menu { 
 	display:none; 
 	position:absolute; 
@@ -63,7 +59,6 @@
 	background:#FFFFFF; 
 	text-align:left;
 }
-
 div.usericon a.icon img {
 	z-index:10;
 }
@@ -81,7 +76,6 @@ div.usericon a.icon img {
 	color: #4690d6;
 	margin:0 !important;
 }
-
 .usericon div.sub_menu h3:hover {
 
 }
@@ -99,15 +93,12 @@ div.usericon a.icon img {
 	margin:0;
 	padding:0;
 }
-
 .user_menu_admin {
 	border-top:solid 1px #dddddd;
 }
-
 .user_menu_admin a {
 	color: red;
 }
-
 .user_menu_admin a:hover {
 	color:white !important;
 	background:red !important;
@@ -116,7 +107,6 @@ div.usericon a.icon img {
 .resetdefaultprofile {
 	padding:0 10px 0 10px;
 }
-
 .resetdefaultprofile input[type="submit"] {
 	background-color: transparent;
 	background-image: url(<?php echo $vars['url']; ?>_graphics/jr/button_grid_master.png);
@@ -128,7 +118,6 @@ div.usericon a.icon img {
 	text-indent: -999em;
 	border: 0;
 }
-
 .resetdefaultprofile input[type="submit"]:hover {
 	background-position: -582px -28px;
 }

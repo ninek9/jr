@@ -1,6 +1,6 @@
 <?php
 
-	$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
+$performed_by = get_entity($vars['item']->subject_guid);
 	$object = get_entity($vars['item']->object_guid);
 	$url = $object->getURL();
 
@@ -11,8 +11,4 @@
 	$string .= $object->description;
 	$string .= "</div>";
 
-?>
-
-<?php 
 	echo $string; 
-?>
