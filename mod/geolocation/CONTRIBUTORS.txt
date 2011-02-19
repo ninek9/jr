@@ -1,0 +1,11 @@
+MAIN DEVELOPER
+ 
+ Pedro Prez <pedroprez@gmail.com>
+ http://twitter.com/pedroprez
+ 
+ CONTRIBUTING PEOPLE
+ Juan Prez <prez.juan@gmail.com>
+ http://twitter.com/jiprez
+ 
+ THANKS
+ Thanks to Keetup Development <http://www.keetup.com/> for allowing to publish this plugin.
