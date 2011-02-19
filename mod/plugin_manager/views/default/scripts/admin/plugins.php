@@ -1,1 +1,0 @@
-<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/plugin_manager/js/admin/plugins.js"></script>

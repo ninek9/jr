@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-        <field key="author" value="Miguel Montes mmontesp@gmail.com" />
-        <field key="version" value="0.1" />
-        <field key="description" value="Rate Plugin 0.1" />
-        <field key="website" value="http://community.elgg.org/pg/profile/mmontesp" />
-		<field key="licence" value="GNU Public License version 2" />
-        <field key="copyright" value="(c) Miguel Montes 2008" />
-</plugin_manifest>

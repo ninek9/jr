@@ -1,1 +1,0 @@
-<link href="<?php echo $vars['url']; ?>mod/plugin_manager/css/admin/plugins.css" rel="stylesheet" type="text/css" />

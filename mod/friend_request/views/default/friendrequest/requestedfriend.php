@@ -1,1 +1,0 @@
-<p>You have successfully requested to be friends with <?php echo $vars['friend_name']; ?>. You will be notified when this user approves you.</p>

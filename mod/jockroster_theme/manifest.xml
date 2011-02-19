@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Eric Zanol" />
-	<field key="version" value="1.0" />
-	<field key="description" value="A theme for JockRoster.com. Seems to work best at the top of the plugins list." />
-	<field key="website" value="http://www.jockroster.com" />
-	<field key="licence" value="GNU Public License version 2" />
-</plugin_manifest>
